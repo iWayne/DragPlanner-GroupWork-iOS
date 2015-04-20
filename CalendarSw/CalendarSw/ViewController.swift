@@ -36,6 +36,40 @@ class ViewController: UIViewController, JTCalendarDataSource {
         self.calendar.contentView = self.calendarContentView
         self.calendar.dataSource = self
         self.calendar.reloadData()
+        let swiftColor = UIColor(red: 1, green: 165/255, blue: 0, alpha: 1)
+        
+        let todayColor = UIColor(red: 1, green: 165/255, blue: 0, alpha: 1)
+        
+        let selectColor = UIColor(red:35/255, green:159/255, blue: 192/255, alpha: 100)
+        
+        // self.calendar.calendarAppearance.calendar.firstWeekday() = 2; // Monday
+        
+        //self.calendar.calendarAppearance.ratioContentMenu = 1;
+        
+       // self.calendar.calendarAppearance.menuMonthTextColor = UIColor.blackColor()
+        
+       // self.calendar.calendarAppearance.dayCircleColorSelected = UIColor.blackColor()
+        
+       // self.calendar.calendarAppearance.dayCircleColorSelectedOtherMonth = UIColor.blackColor()
+        
+        self.calendar.calendarAppearance.dayCircleColorToday = todayColor
+        //self.calendar.contentView.backgroundColor = selectColor MONTH BG
+        self.maDayView.backgroundColor = UIColor.blackColor()         
+          //  topBackground.backgroundColor = todayColor
+        //self.calendar.calendarAppearance.dayCircleColorTodayOtherMonth = UIColor.blackColor()
+        
+        
+        
+        
+        
+        
+        //self.calendar.calendarAppearance.dayCircleColorToday = todayColor
+        
+        //self.calendar.calendarAppearance.dayTextColorSelected = UIColor.whiteColor()
+        
+
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
     
