@@ -38,7 +38,6 @@
 	UIImageView *_topBackground;
 	UIButton *_leftArrow, *_rightArrow;
 	UILabel *_dateLabel;
-	
 	UIScrollView *_scrollView;
 	MA_AllDayGridView *_allDayGridView;
 	MADayHourView *_hourView;
@@ -57,6 +56,7 @@
 	id<MADayViewDelegate> __unsafe_unretained _delegate;
 }
 
+@property (nonatomic,copy) UIScrollView *scrollView;
 @property (nonatomic,assign) BOOL autoScrollToFirstEvent;
 @property (readwrite,assign) unsigned int labelFontSize;
 @property (nonatomic,copy) NSDate *day;

@@ -132,7 +132,7 @@
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="337" width="400" height="100"/>
+                                    <rect key="frame" x="0.0" y="337" width="400" height="87"/>
                                     <mask key="subviews">
                                         <include reference="irP-Ds-P0Y"/>
                                     </mask>

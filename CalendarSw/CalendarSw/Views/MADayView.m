@@ -137,6 +137,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT          = 35;
 @implementation MADayView
 
 @synthesize autoScrollToFirstEvent=_autoScrollToFirstEvent;
+@synthesize scrollView = _scrollView;
 @synthesize labelFontSize=_labelFontSize;
 @synthesize delegate=_delegate;
 @synthesize firstDate=_firstDate;

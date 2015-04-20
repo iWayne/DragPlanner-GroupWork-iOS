@@ -14,7 +14,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     var _eventKitDataSource:MAEventKitDataSource = MAEventKitDataSource()
     var newDate:NSDate? = NSDate()
     var arrEvent:[MAEvent] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -43,6 +42,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             dayView.day = date as NSDate
             dayView.autoScrollToFirstEvent = true
             //self.dayView(dayView, eventsForDate: newDate! as NSDate)
+            
         }
         
     }
