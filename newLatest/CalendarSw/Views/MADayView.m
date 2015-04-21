@@ -618,7 +618,8 @@ static NSString const * const HOURS_24[] = {
 	MADayEventView *eventView = [[MADayEventView alloc] initWithFrame:CGRectZero];
 	eventView.dayView = self.dayView;
 	eventView.event = event;
-	eventView.backgroundColor = [UIColor colorWithRed:35/255. green:159/255. blue:192/255. alpha:100];
+    
+	eventView.backgroundColor = [UIColor colorWithRed:229/255. green:155/255. blue:155/255. alpha:0.7];
     eventView.title = event.title;
 	eventView.textFont = self.dayView.boldFont;
 	eventView.textColor = event.textColor;

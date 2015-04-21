@@ -56,6 +56,9 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         self.view.bringSubviewToFront(doneButton)
         doneButton.frame = CGRectMake(200, 100, 100, 100)
         // Do any additional setup after loading the view.
+        moveTextView.setTranslatesAutoresizingMaskIntoConstraints(true)
+        timeLabel.setTranslatesAutoresizingMaskIntoConstraints(true)
+        timeLabel2.setTranslatesAutoresizingMaskIntoConstraints(true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,9 +94,15 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         addView.layer.borderColor = UIColor.brownColor().CGColor
         addView.layer.cornerRadius = 5
         addView.frame = CGRectMake(10, 300, 100, 200)
-        redButton.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.3)
-        greenButton.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.3)
-        blueButton.backgroundColor = UIColor.blueColor().colorWithAlphaComponent(0.3)
+        
+        
+        let bColor = UIColor(red:229/255, green:155/255, blue: 155/255, alpha: 0.7)
+        let rColor = UIColor(red:242/255, green:193/255, blue: 24/255, alpha: 0.7)
+        let gColor = UIColor(red:142/255, green:201/255, blue: 188/255, alpha: 0.7)
+        
+        redButton.backgroundColor = bColor
+        greenButton.backgroundColor = rColor
+        blueButton.backgroundColor = gColor
     }
     
     @IBAction func doneButtonAction(sender: AnyObject) {
@@ -220,6 +229,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             dayView.day = date as NSDate
             dayView.autoScrollToFirstEvent = true
             //self.dayView(dayView, eventsForDate: newDate! as NSDate)
+            
             
         }
         

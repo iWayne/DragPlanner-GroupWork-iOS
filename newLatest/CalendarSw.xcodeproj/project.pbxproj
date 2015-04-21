@@ -27,6 +27,7 @@
 		80FAE5C11AD33FC0002D9E65 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80FAE5C01AD33FC0002D9E65 /* Images.xcassets */; };
 		80FAE5C41AD33FC0002D9E65 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80FAE5C21AD33FC0002D9E65 /* LaunchScreen.xib */; };
 		80FAE5D01AD33FC0002D9E65 /* CalendarSwTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FAE5CF1AD33FC0002D9E65 /* CalendarSwTests.swift */; };
+		B9F37F4F1AE6FEE000B97CA4 /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F37F4E1AE6FEE000B97CA4 /* line.png */; };
 		D60DB0191D89556BE87F7C0B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2998A5F23FB3FFDDD57B5966 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		80FAE5CE1AD33FC0002D9E65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80FAE5CF1AD33FC0002D9E65 /* CalendarSwTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSwTests.swift; sourceTree = "<group>"; };
 		866B887A099315E3541C3B99 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		B9F37F4E1AE6FEE000B97CA4 /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		CA442B1539BC4629962DD9E0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +111,7 @@
 			children = (
 				8025D6721AE2C9EC007B412B /* ma_leftArrow.png */,
 				8025D6731AE2C9EC007B412B /* ma_leftArrow@2x.png */,
+				B9F37F4E1AE6FEE000B97CA4 /* line.png */,
 				8025D6741AE2C9EC007B412B /* ma_rightArrow.png */,
 				8025D6751AE2C9EC007B412B /* ma_rightArrow@2x.png */,
 				8025D6761AE2C9EC007B412B /* ma_topBackground.png */,
@@ -300,6 +303,7 @@
 			files = (
 				8025D6791AE2C9EC007B412B /* ma_rightArrow.png in Resources */,
 				80FAE5BF1AD33FC0002D9E65 /* Main.storyboard in Resources */,
+				B9F37F4F1AE6FEE000B97CA4 /* line.png in Resources */,
 				80FAE5C41AD33FC0002D9E65 /* LaunchScreen.xib in Resources */,
 				8025D6771AE2C9EC007B412B /* ma_leftArrow.png in Resources */,
 				8025D6781AE2C9EC007B412B /* ma_leftArrow@2x.png in Resources */,
