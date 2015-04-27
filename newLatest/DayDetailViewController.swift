@@ -24,7 +24,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     @IBOutlet weak var greenButton: UIButton!
     @IBOutlet weak var blueButton: UIButton!
     
-    var oldCoordinate: CGPoint = CGPoint(x: 0, y: 500)
+    var oldCoordinate: CGPoint = CGPoint(x: 50, y: 500)
     var oldHeight: CGFloat = 100
     var oldWidth: CGFloat = 100
     var topY: CGFloat = 55
@@ -46,7 +46,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        oldWidth = self.view.bounds.size.width - 20
+        oldWidth = self.view.bounds.size.width - 50 - timeLabel.bounds.width
         setMoveTextView()
         setAddView()
         addButton.hidden = false
@@ -59,6 +59,9 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.setTranslatesAutoresizingMaskIntoConstraints(true)
         timeLabel.setTranslatesAutoresizingMaskIntoConstraints(true)
         timeLabel2.setTranslatesAutoresizingMaskIntoConstraints(true)
+        
+//        var tapScrollView: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: "donedone")
+//        (self.view as MADayView).scrollView.addGestureRecognizer(tapScrollView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,7 +82,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.3)
         moveTextView.delegate = self
 
-        moveTextView.frame = CGRectMake(0, 100, self.view.bounds.size.width - 20, self.view.bounds.size.height)
+        moveTextView.frame = CGRectMake(timeLabel.bounds.width, 100, self.view.bounds.size.width - 20, self.view.bounds.size.height)
         self.view.bringSubviewToFront(moveTextView)
         self.view.bringSubviewToFront(timeLabel)
         self.view.bringSubviewToFront(timeLabel2)
@@ -110,6 +113,11 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         println(bottomY)
         self.addEventByDrop(topY, bottomY1: bottomY)
         moveTextView.hidden = true
+        
+//        newDate = (self.view as MADayView).day
+//        dayView(self.view as MADayView, eventsForDate: newDate)
+//        (self.view as MADayView).reloadData()
+
     }
     @IBAction func redButtonAction(sender: AnyObject) {
         moveTextView.backgroundColor = redButton.backgroundColor
@@ -181,12 +189,11 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         changeCGFloatToTime()
         timeLabel.text = startTime
         timeLabel2.text = endTime
-        timeLabel.frame = CGRectMake(location.x + moveTextView.bounds.width/2, location.y - moveTextView.bounds.height/2, timeLabel.bounds.width, timeLabel.bounds.height)
-        timeLabel2.frame = CGRectMake(location.x + moveTextView.bounds.width/2, location.y + moveTextView.bounds.height/2 - timeLabel2.bounds.height, timeLabel2.bounds.width, timeLabel2.bounds.height)
+        timeLabel.frame = CGRectMake(moveTextView.center.x + moveTextView.bounds.width/2, location.y - moveTextView.bounds.height/2, timeLabel.bounds.width, timeLabel.bounds.height)
+        timeLabel2.frame = CGRectMake(moveTextView.center.x + moveTextView.bounds.width/2, location.y + moveTextView.bounds.height/2 - timeLabel2.bounds.height, timeLabel2.bounds.width, timeLabel2.bounds.height)
         println("x: \(topY) y: \(bottomY)")
         timeLabel.hidden = false
         timeLabel2.hidden = false
-        
     }
     @IBAction func addEvent(sender: UIButton) {
 //        var dayView2:MADayView = self.view as MADayView
@@ -203,6 +210,22 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
 //        println("dsfdfdsf")
         addView.hidden = showAddView
         showAddView = !showAddView
+    }
+    
+    func donedone(){
+        
+    }
+    
+    func changeDay() {
+        if(moveTextView.frame.origin.x > 150) {
+            var dayView: MADayView = self.view as MADayView
+            newDate = dayView.nextDayFromDate(newDate)
+            dayView.day = newDate
+        } else if(moveTextView.frame.origin.x < -110) {
+            var dayView: MADayView = self.view as MADayView
+            newDate = dayView.previousDayFromDate(newDate)
+            dayView.day = newDate
+        }
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -227,9 +250,9 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             //println(date.description)
             var dayView:MADayView = self.view as MADayView
             dayView.day = date as NSDate
-            dayView.autoScrollToFirstEvent = true
+            dayView.autoScrollToFirstEvent = false
             //self.dayView(dayView, eventsForDate: newDate! as NSDate)
-            
+            var tim: NSTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("changeDay"), userInfo: nil, repeats: true)
             
         }
         
@@ -256,21 +279,75 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         var dayViewOffsetY = (self.view as MADayView).scrollView.contentOffset.y
         var startOffset = (topY1 - 55.0 + dayViewOffsetY )*3600/46.25
         var endOffset = (bottomY1 - 55.0 + dayViewOffsetY )*3600/46.25
+        println("startOffSet:\(startOffset)")
         var startTime:NSDate? = newDate?.dateByAddingTimeInterval(Double(startOffset))
         var endTime:NSDate? = newDate?.dateByAddingTimeInterval(Double(endOffset))
         println(startTime!.description)
         println(endTime!.description)
-        arrEvent.append(self.createEvent(startTime!, endTime: endTime!))
+        arrEvent.append(self.createEvent(startTime!, endTime: endTime!, color: moveTextView.backgroundColor!))
         var dayView:MADayView = self.view as MADayView
         dayView.reloadData()
     }
 
+    func dayView(dayView: MADayView!, eventTapped event: MAEvent!) {
+
+//        removeEvent(event)
+//        dayView.reloadData()
+        removeEvent(event)
+        moveTextView.hidden = false
+        var formatter = NSDateFormatter();
+        formatter.dateFormat = "HH:mm";
+        var startT = formatter.stringFromDate(event.start)
+        var endT = formatter.stringFromDate(event.end)
+        var startHourAndMinite = split(startT){$0 == ":"}
+        var endHourAndMinite = split(endT){$0 == ":"}
+        var startSec = startHourAndMinite[0].toInt()! * 3600 + startHourAndMinite[1].toInt()! * 60
+        var endSec = endHourAndMinite[0].toInt()! * 3600 + endHourAndMinite[1].toInt()! * 60
+        var dayViewOffsetY = (self.view as MADayView).scrollView.contentOffset.y
+        var topYY = Double(startSec)/3600 * 46.25 + 55.0 - Double(dayViewOffsetY)
+        var endYY = Double(endSec)/3600 * 46.25 + 55.0 - Double(dayViewOffsetY)
+        var height: CGFloat = CGFloat(endYY) - CGFloat(topYY)
+        moveTextView.frame = CGRectMake(50, CGFloat(topYY), self.view.bounds.size.width - 20, height)
+        println("\(startSec) , \(endSec)")
+    }
     
-    func createEvent(startT:NSDate,endTime:NSDate)->MAEvent{
+    func removeEvent(event: MAEvent){
+        var count: Int = -1
+        var index: Int = -1
+        for e in arrEvent {
+            count++
+            if e.start == event.start && e.end == event.end {
+                index = count
+                break
+            }
+        }
+        if index != -1 {
+            arrEvent.removeAtIndex(index)
+            (self.view as MADayView).reloadData()
+        }
+    }
+    
+    func hiddenEvent(event: MAEvent) {
+        var count: Int = -1
+        var index: Int = -1
+        for e in arrEvent {
+            count++
+            if e.start == event.start && e.end == event.end {
+                index = count
+                println("found u")
+                e.backgroundColor = UIColor.whiteColor()
+                (self.view as MADayView).reloadData()
+                break
+            }
+        }
+
+    }
+    
+    func createEvent(startT:NSDate, endTime:NSDate, color: UIColor)->MAEvent{
         //var r = arc4random()%24
         var event = MAEvent()
         event.textColor = UIColor.whiteColor()
-        event.backgroundColor = UIColor.purpleColor()
+        event.backgroundColor = color
         event.allDay = false
         event.title = "Here"
         event.start = startT

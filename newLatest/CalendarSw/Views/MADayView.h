@@ -65,7 +65,8 @@
 
 - (void)reloadData;
 - (void)limitDaysToFirstDate:(NSDate *)firstDate lastDate:(NSDate*)lastDate;
-
+- (NSDate *)nextDayFromDate:(NSDate *)date;
+- (NSDate *)previousDayFromDate:(NSDate *)date;
 @end
 
 @protocol MADayViewDataSource <NSObject>
