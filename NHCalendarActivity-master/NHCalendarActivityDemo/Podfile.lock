@@ -1,0 +1,13 @@
+PODS:
+  - Cedar (0.9.4)
+  - Swizzlean (0.1.1)
+
+DEPENDENCIES:
+  - Cedar (~> 0.9.3)
+  - Swizzlean (~> 0.1.1)
+
+SPEC CHECKSUMS:
+  Cedar: 56053d07b66394a84a576f6a4fa849ec13b5fc56
+  Swizzlean: 364ac43b04c92f24e352cd701df495c4096674d0
+
+COCOAPODS: 0.28.0
