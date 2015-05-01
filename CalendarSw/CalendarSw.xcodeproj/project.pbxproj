@@ -267,6 +267,7 @@
 				TargetAttributes = {
 					80FAE5B31AD33FC0002D9E65 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 6QN349HHUB;
 					};
 					80FAE5C81AD33FC0002D9E65 = {
 						CreatedOnToolsVersion = 6.2;
@@ -492,7 +493,9 @@
 			baseConfigurationReference = 866B887A099315E3541C3B99 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CalendarSw/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = JTCalendar_BridgeHeader.h;
@@ -504,7 +507,9 @@
 			baseConfigurationReference = CA442B1539BC4629962DD9E0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CalendarSw/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = JTCalendar_BridgeHeader.h;
