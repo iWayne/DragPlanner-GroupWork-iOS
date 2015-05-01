@@ -242,7 +242,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT          = 35;
 		_dateLabel.textAlignment = UITextAlignmentCenter;
 		_dateLabel.backgroundColor = [UIColor clearColor];
 		_dateLabel.font = [UIFont boldSystemFontOfSize:18];
-		_dateLabel.textColor = [UIColor colorWithRed:59/255. green:73/255. blue:88/255. alpha:1];
+        _dateLabel.textColor = [UIColor colorWithRed:59/255. green:73/255. blue:88/255. alpha:1];
 	}
 	return _dateLabel;
 }
@@ -267,6 +267,8 @@ static const unsigned int TOP_BACKGROUND_HEIGHT          = 35;
 	}
 	return _allDayGridView;
 }
+
+
 
 - (MADayGridView *)gridView {
 	if (!_gridView){

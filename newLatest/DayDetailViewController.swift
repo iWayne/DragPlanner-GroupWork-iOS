@@ -9,7 +9,20 @@
 import UIKit
 
 class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataSource, UITextViewDelegate {
+    @IBOutlet weak var back: UIButton!
     
+    @IBAction func backaction(sender: AnyObject) {
+       // DaySmallViewController.calender.calendarAppearance.dayCircleColorSelected = todayColor
+        let todayColor = UIColor(red: 1, green: 165/255, blue: 0, alpha: 1)
+        
+        //
+      //  var myDate = self.dayView(, eventsForDate: <#NSDate!#>)
+      //  var myDate = [self.calendar setCurrentDate:myDate];
+       //self.calendar setCurrentDate:myDate];
+        
+       // ViewController.calendar(self).calendar.calendarAppearance.dayCircleColorSelected = todayColor
+    }
+    @IBOutlet weak var backaction: UIButton!
     let CURRENT_CALENDAR = NSCalendar.currentCalendar()
     var eventKitDataSource:MAEventKitDataSource = MAEventKitDataSource()
     var _eventKitDataSource:MAEventKitDataSource = MAEventKitDataSource()

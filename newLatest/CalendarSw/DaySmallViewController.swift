@@ -18,6 +18,7 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
         //super.viewDidLoad()
         var dayView:MADayView = self.view as MADayView
         dayView.autoScrollToFirstEvent = true
+         
     }
 
     override func didReceiveMemoryWarning() {

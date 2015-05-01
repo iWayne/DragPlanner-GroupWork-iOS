@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6750" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6735"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--Day Detail View Controller-->
@@ -104,6 +104,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="backaction:" destination="kC1-hZ-HbF" eventType="touchUpInside" id="bxT-jD-rO4"/>
                                     <segue destination="BYZ-38-t0r" kind="custom" id="1Do-cl-6sQ"/>
                                 </connections>
                             </button>
@@ -120,10 +121,13 @@
                             <outlet property="delegate" destination="kC1-hZ-HbF" id="ghK-PE-qwL"/>
                         </connections>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="addButton" destination="sqW-RU-VOm" id="Mda-t9-KdL"/>
                         <outlet property="addView" destination="HQS-cC-v4V" id="7gT-i3-MkM"/>
+                        <outlet property="back" destination="yLb-ip-Oxn" id="5WF-3I-wOy"/>
                         <outlet property="blueButton" destination="Ax6-QU-VA2" id="94H-x4-euT"/>
                         <outlet property="doneButton" destination="rIh-au-xeb" id="fnE-Ts-eOl"/>
                         <outlet property="greenButton" destination="Zsk-zY-Hgm" id="JcD-Zl-vRu"/>
