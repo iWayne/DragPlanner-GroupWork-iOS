@@ -2,15 +2,17 @@ For Function:
   1.Combine Sharing Function to iCalendar/Facebook;   Done
   2.Read Data From iCalendar;                         Done
   3.Finish Edit by Touch Blank Area
-  4.Sync with Parse
-  5.Event in Different Date
+  4.Sync with Parse                                   
+  5.Event in Different Date                           Trying to rewrite Pods
+
 
 For UI:
-  1.Automatically Change Month View's Frame Hight
+  1.Automatically Change Month View's Frame Hight     Fail
   2.Color
   3.Time Label Position and Clear Seconds
 
+
 Other:
   Modify for iOS 8.3
-  Make difference from Apple's Calendar
+  Make difference from Apple's Calendar               Doning
   Slides
