@@ -61,7 +61,7 @@ class ViewController: UIViewController, JTCalendarDataSource {
         //self.calendar.calendarAppearance.dayCircleColorTodayOtherMonth = UIColor.blackColor()
         
        // self.calendar.currentDateSelected.dayCircleColorSelected = todayColor
-        self.calendar.currentDateSelected.description
+        self.calendar.currentDateSelected.description =
         
 //        [self.calendar setMenuMonthsView:self.calendarMenuView];
 //        [self.calendar setContentView:self.calendarContentView];
