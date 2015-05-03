@@ -28,6 +28,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     var modifying = false
     var objId: String?
     var idMayDelete: String?
+    var store:EKEventStore = EKEventStore()
     
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var redButton: UIButton!
@@ -91,9 +92,8 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             dayView.autoScrollToFirstEvent = false
             //self.dayView(dayView, eventsForDate: newDate! as NSDate)
             var tim: NSTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("changeDay"), userInfo: nil, repeats: true)
-            showCurrentSchedule()
+            reloadEventFromBoth()
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -151,8 +151,22 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         }
     }
     
+    func changeDay() {
+        if(moveTextView.frame.origin.x > 150) {
+            swipeLeft()
+        } else if(moveTextView.frame.origin.x < -110) {
+            swipeRight()
+        }
+    }
+    
     func refreshView(){
         (self.view as MADayView).reloadData()
+    }
+    
+    func reloadEventFromBoth(){
+        arrEvent = []
+        readFromAppleCalendar()
+        showCurrentSchedule()
     }
     
     //---------------------------------------------------------------------------------------------------
@@ -163,7 +177,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         newDate = dayView.previousDayFromDate(newDate)
         dayView.day = newDate
         println("Use Swipe Right")
-        showCurrentSchedule()
+        reloadEventFromBoth()
         
     }
     
@@ -172,7 +186,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         newDate = dayView.nextDayFromDate(newDate)
         dayView.day = newDate
         println("Use Swipe Left")
-        showCurrentSchedule()
+        reloadEventFromBoth()
     }
     
     //---------------------------------------------------------------------------------------------------
@@ -197,7 +211,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         var items = [msg,url,event]
         var activity:UIActivityViewController = UIActivityViewController(activityItems: items, applicationActivities: activities)
         self.presentViewController(activity, animated: true, completion: nil)
-        
     }
 
     //---------------------------------------------------------------------------------------------------
@@ -205,8 +218,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     //---------------------------------------------------------------------------------------------------
     
     func showCurrentSchedule() {
-        
-        arrEvent.removeAll(keepCapacity: true)
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         var current = dateFormatter.stringFromDate(newDate!)
@@ -241,6 +252,46 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             }
         }
         refreshView()
+    }
+    
+    
+    //---------------------------------------------------------------------------------------------------
+    //Read from Apple Calendar
+    //---------------------------------------------------------------------------------------------------
+    
+    func readFromAppleCalendar(){
+        var oneDayAgo:NSDate = getMidnight()
+        var oneDayAfter: NSDate = oneDayAgo.dateByAddingTimeInterval(3600*24)
+        store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
+            if(granted){
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    var predicate:NSPredicate = self.store.predicateForEventsWithStartDate(oneDayAgo, endDate: oneDayAfter, calendars: nil)
+                    if(self.store.eventsMatchingPredicate(predicate) != nil) {
+                        var events:NSArray = self.store.eventsMatchingPredicate(predicate)
+                        for event in events {
+                            //if(self.checkEventID((event as EKEvent).eventIdentifier)){
+                                self.arrEvent.append(self.assignEvent(event as EKEvent))
+                            //}
+                        }
+                        (self.view as MADayView).reloadData()
+                    }
+                })
+            }else{
+                println("no way")
+            }
+        })
+    }
+    
+    func assignEvent(eventInput:EKEvent)->MAEvent{
+        var event = MAEvent()
+        event.title = eventInput.title
+        event.start = eventInput.startDate
+        event.end = eventInput.endDate
+        event.allDay = eventInput.allDay
+        //if(eventInput.hasAlarms){}
+        event.appleEventID = eventInput.eventIdentifier
+        event.backgroundColor = gColor
+        return event
     }
 
     //---------------------------------------------------------------------------------------------------
@@ -277,17 +328,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         redButton.backgroundColor = bColor
         greenButton.backgroundColor = rColor
         blueButton.backgroundColor = gColor
-    }
-    func changeDay() {
-        if(moveTextView.frame.origin.x > 150) {
-            var dayView: MADayView = self.view as MADayView
-            newDate = dayView.nextDayFromDate(newDate)
-            dayView.day = newDate
-        } else if(moveTextView.frame.origin.x < -110) {
-            var dayView: MADayView = self.view as MADayView
-            newDate = dayView.previousDayFromDate(newDate)
-            dayView.day = newDate
-        }
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -586,7 +626,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 break
             }
         }
-
     }
     
     func createEvent(startT:NSDate, endTime:NSDate, color: UIColor)->MAEvent{
@@ -603,4 +642,12 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         return event
     }
     
+    //---------------------------------------------------------------------------------------------------
+    //Others
+    //---------------------------------------------------------------------------------------------------
+    func getMidnight()->NSDate{
+        var calendar:NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        var comp:NSDateComponents = calendar.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: NSDate())
+        return calendar.dateFromComponents(comp)!
+    }
 }
