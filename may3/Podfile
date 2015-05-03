@@ -1,0 +1,2 @@
+pod 'JTCalendar'
+pod 'NHCalendarActivity', '~> 0.0.1'
