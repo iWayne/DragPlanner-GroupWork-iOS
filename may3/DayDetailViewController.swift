@@ -16,10 +16,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     var _eventKitDataSource:MAEventKitDataSource = MAEventKitDataSource()
     var newDate:NSDate? = NSDate()
     var arrEvent:[MAEvent] = []
-    let bColor = UIColor(red:229/255, green:155/255, blue: 155/255, alpha: 0.7)
-    let rColor = UIColor(red:242/255, green:193/255, blue: 24/255, alpha: 0.7)
-    let gColor = UIColor(red:142/255, green:201/255, blue: 188/255, alpha: 0.7)
-    
     
     var oldCoordinate: CGPoint = CGPoint(x: 50, y: 500)
     var oldHeight: CGFloat = 100
@@ -82,9 +78,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         (self.view as MADayView).gridView.addGestureRecognizer(swipeRightGesture)
         (self.view as MADayView).gridView.addGestureRecognizer(swipeLeftGesture)
         
-        
-//        var tapScrollView: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: "donedone")
-//        (self.view as MADayView).scrollView.addGestureRecognizer(tapScrollView)
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -217,7 +211,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-
+        refreshView()
     }
 
     
@@ -500,15 +494,16 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         println(startTime!.description)
         println(endTime!.description)
         arrEvent.append(self.createEvent(startTime!, endTime: endTime!, color: moveTextView.backgroundColor!))
-        var dayView:MADayView = self.view as MADayView
-        dayView.reloadData()
+        refreshView()
     }
     
     func addEventByTime(sTime: NSDate, eTime: NSDate, color: String) {
 //        arrEvent.removeAll(keepCapacity: true)
         arrEvent.append(self.createEvent(sTime, endTime: eTime, color: UIColor.blackColor()))
-        var dayView:MADayView = self.view as MADayView
-        dayView.reloadData()
+    }
+    
+    func refreshView(){
+        (self.view as MADayView).reloadData()
     }
 
     func dayView(dayView: MADayView!, eventTapped event: MAEvent!) {
@@ -565,7 +560,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         }
         if index != -1 {
             arrEvent.removeAtIndex(index)
-            (self.view as MADayView).reloadData()
+            refreshView()
         }
     }
     
@@ -578,7 +573,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 index = count
                 println("found u")
                 e.backgroundColor = UIColor.whiteColor()
-                (self.view as MADayView).reloadData()
+                refreshView()
                 break
             }
         }

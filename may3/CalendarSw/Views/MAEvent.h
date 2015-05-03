@@ -36,15 +36,18 @@ NSInteger MAEvent_sortByStartTime(id ev1, id ev2, void *keyForSorting);
 	NSDate *_end;
 	NSDate *_displayDate;
 	BOOL _allDay;
-    NSString *_eventID;
+    NSString *_eventID; //reversed
 	UIColor *backgroundColor;
 	UIColor *textColor;
-	
+    //for Notification
 	NSDictionary *userInfo;
+    //----Extra Data
+    NSString *_appleEventID;
 }
 
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *eventID;
+@property (nonatomic,copy) NSString *appleEventID;
 @property (nonatomic,copy) NSDate *start;
 @property (nonatomic,copy) NSDate *end;
 @property (nonatomic,copy) NSDate *displayDate;

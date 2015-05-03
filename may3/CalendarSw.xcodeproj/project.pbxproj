@@ -22,6 +22,8 @@
 		551BC6B61AF06189004F1E00 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 551BC6B51AF06189004F1E00 /* libsqlite3.dylib */; };
 		551BC6B81AF06190004F1E00 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551BC6B71AF06190004F1E00 /* Accounts.framework */; };
 		551BC6BA1AF0619C004F1E00 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551BC6B91AF0619C004F1E00 /* Social.framework */; };
+		801AD9971AF69530005A3FF4 /* NotificationCenterFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801AD9961AF69530005A3FF4 /* NotificationCenterFunc.swift */; };
+		801AD9991AF697DF005A3FF4 /* ColorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801AD9981AF697DF005A3FF4 /* ColorEnum.swift */; };
 		8025D6771AE2C9EC007B412B /* ma_leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8025D6721AE2C9EC007B412B /* ma_leftArrow.png */; };
 		8025D6781AE2C9EC007B412B /* ma_leftArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8025D6731AE2C9EC007B412B /* ma_leftArrow@2x.png */; };
 		8025D6791AE2C9EC007B412B /* ma_rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8025D6741AE2C9EC007B412B /* ma_rightArrow.png */; };
@@ -73,6 +75,8 @@
 		551BC6B51AF06189004F1E00 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		551BC6B71AF06190004F1E00 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		551BC6B91AF0619C004F1E00 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		801AD9961AF69530005A3FF4 /* NotificationCenterFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterFunc.swift; sourceTree = "<group>"; };
+		801AD9981AF697DF005A3FF4 /* ColorEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorEnum.swift; path = ../ColorEnum.swift; sourceTree = "<group>"; };
 		8025D6721AE2C9EC007B412B /* ma_leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ma_leftArrow.png; sourceTree = "<group>"; };
 		8025D6731AE2C9EC007B412B /* ma_leftArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ma_leftArrow@2x.png"; sourceTree = "<group>"; };
 		8025D6741AE2C9EC007B412B /* ma_rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ma_rightArrow.png; sourceTree = "<group>"; };
@@ -228,10 +232,12 @@
 		80FAE5B61AD33FC0002D9E65 /* CalendarSw */ = {
 			isa = PBXGroup;
 			children = (
+				801AD9981AF697DF005A3FF4 /* ColorEnum.swift */,
 				80FAE5B91AD33FC0002D9E65 /* AppDelegate.swift */,
 				80FAE5BB1AD33FC0002D9E65 /* ViewController.swift */,
 				8025D6901AE2CA9E007B412B /* DaySmallViewController.swift */,
 				8025D6941AE2D3E1007B412B /* DayDetailViewController.swift */,
+				801AD9961AF69530005A3FF4 /* NotificationCenterFunc.swift */,
 				80FAE5BD1AD33FC0002D9E65 /* Main.storyboard */,
 				80FAE5C01AD33FC0002D9E65 /* Images.xcassets */,
 				80FAE5C21AD33FC0002D9E65 /* LaunchScreen.xib */,
@@ -427,8 +433,10 @@
 				8025D6931AE2CBCD007B412B /* Singleton.swift in Sources */,
 				8025D68D1AE2C9F7007B412B /* MAGridView.m in Sources */,
 				8025D68F1AE2C9F7007B412B /* TapDetectingView.m in Sources */,
+				801AD9971AF69530005A3FF4 /* NotificationCenterFunc.swift in Sources */,
 				8025D6911AE2CA9E007B412B /* DaySmallViewController.swift in Sources */,
 				8025D67F1AE2C9F1007B412B /* MAEventKitDataSource.m in Sources */,
+				801AD9991AF697DF005A3FF4 /* ColorEnum.swift in Sources */,
 				8025D68C1AE2C9F7007B412B /* MAEvent.m in Sources */,
 				80FAE5BA1AD33FC0002D9E65 /* AppDelegate.swift in Sources */,
 			);

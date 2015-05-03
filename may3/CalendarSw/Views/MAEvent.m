@@ -71,7 +71,6 @@ NSInteger MAEvent_sortByStartTime(id ev1, id ev2, void *keyForSorting) {
 @implementation MAEvent
 
 @synthesize title=_title;
-@synthesize eventID=_eventID;
 @synthesize start=_start;
 @synthesize end=_end;
 @synthesize displayDate=_displayDate;
@@ -79,8 +78,20 @@ NSInteger MAEvent_sortByStartTime(id ev1, id ev2, void *keyForSorting) {
 @synthesize backgroundColor=_backgroundColor;
 @synthesize textColor=_textColor;
 @synthesize userInfo=_userInfo;
+@synthesize eventID=_eventID;
+@synthesize appleEventID = _appleEventID;
 
 #define DATE_CMP(X, Y) ([X year] == [Y year] && [X month] == [Y month] && [X day] == [Y day])
+
+- (NSDictionary*) userInfo{
+    if(_eventID != nil){
+        NSDictionary* dict = [NSDictionary dictionaryWithObject:_eventID forKey:@"key"];
+        return dict;
+    }
+    else{
+        return nil;
+    }
+}
 
 - (unsigned int)minutesSinceMidnight {
 	unsigned int fromMidnight = 0;

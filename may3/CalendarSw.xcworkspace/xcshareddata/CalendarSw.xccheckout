@@ -12,13 +12,17 @@
 	<dict>
 		<key>572A629B9F7E810211D3AD11304033310E44A3C4</key>
 		<string>https://github.com/ishawn/CS9033-GroupWork-DailyShedule.git</string>
+		<key>6A3B12F7A52104310798316D257C1987ACE56EB5</key>
+		<string>https://github.com/ishawn/CS9033-Spr2015-HW-WeiShan.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>may1/CalendarSw.xcworkspace</string>
+	<string>may3/CalendarSw.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>572A629B9F7E810211D3AD11304033310E44A3C4</key>
 		<string>../..</string>
+		<key>6A3B12F7A52104310798316D257C1987ACE56EB5</key>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/ishawn/CS9033-GroupWork-DailyShedule.git</string>
@@ -28,6 +32,14 @@
 	<string>572A629B9F7E810211D3AD11304033310E44A3C4</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6A3B12F7A52104310798316D257C1987ACE56EB5</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
