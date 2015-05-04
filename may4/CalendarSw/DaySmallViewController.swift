@@ -25,7 +25,15 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
     }
     
     override func viewDidAppear(animated: Bool) {
+<<<<<<< HEAD
         reloadEventFromBoth()
+=======
+<<<<<<< HEAD
+        reloadEventFromBoth()
+=======
+        showCurrentSchedule()
+>>>>>>> origin/master
+>>>>>>> origin/master
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,10 +49,38 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
         return arrEvent
     }
     
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/master
     func reloadEventFromBoth(){
         arrEvent = []
         readFromAppleCalendar()
         showCurrentSchedule()
+<<<<<<< HEAD
+=======
+=======
+    func dayView(dayView: MADayView!, eventsForDate date: NSDate!) -> NSArray {
+        newDate = date
+        var arr:NSArray = [self.createEvent()]
+        println(arr.count)
+        return arr
+    }
+    
+    func createEvent()->MAEvent{
+        //var r = arc4random()%24
+        var event = MAEvent()
+        event.textColor = UIColor.whiteColor()
+        event.backgroundColor = UIColor.purpleColor()
+        event.allDay = false
+        event.title = "Here"
+        event.start = NSDate()
+        event.end = NSDate().dateByAddingTimeInterval(60*60*1)
+        println(event.start.description)
+        println(event.end.description)
+        return event
+>>>>>>> origin/master
+>>>>>>> origin/master
     }
     
     func createEvent(startT:NSDate, endTime:NSDate, color: UIColor, title: String)->MAEvent{
@@ -122,6 +158,7 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
         return UIColor()
     }
 
+<<<<<<< HEAD
     //---------------------------------------------------------------------------------------------------
     //Read from Apple Calendar
     //---------------------------------------------------------------------------------------------------
@@ -162,4 +199,50 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
         return event
     }
 
+=======
+<<<<<<< HEAD
+    //---------------------------------------------------------------------------------------------------
+    //Read from Apple Calendar
+    //---------------------------------------------------------------------------------------------------
+    
+    func readFromAppleCalendar(){
+        var oneDayAgo:NSDate = getMidnight()
+        var oneDayAfter: NSDate = oneDayAgo.dateByAddingTimeInterval(3600*24)
+        var store:EKEventStore = EKEventStore()
+        store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
+            if(granted){
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    var predicate:NSPredicate = store.predicateForEventsWithStartDate(oneDayAgo, endDate: oneDayAfter, calendars: nil)
+                    if(store.eventsMatchingPredicate(predicate) != nil) {
+                        var events:NSArray = store.eventsMatchingPredicate(predicate)
+                        for event in events {
+                            if(!(event as EKEvent).allDay){
+                                self.arrEvent.append(self.assignEvent(event as EKEvent))
+                            }
+                        }
+                        (self.view as MADayView).reloadData()
+                    }
+                })
+            }else{
+                println("no way")
+            }
+        })
+    }
+    
+    func assignEvent(eventInput:EKEvent)->MAEvent{
+        var event = MAEvent()
+        event.title = eventInput.title
+        event.start = eventInput.startDate
+        event.end = eventInput.endDate
+        event.allDay = eventInput.allDay
+        //if(eventInput.hasAlarms){}
+        event.appleEventID = eventInput.eventIdentifier
+        event.backgroundColor = gColor
+        return event
+    }
+
+=======
+    
+>>>>>>> origin/master
+>>>>>>> origin/master
 }

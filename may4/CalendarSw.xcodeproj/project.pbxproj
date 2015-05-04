@@ -24,6 +24,10 @@
 		551BC6BA1AF0619C004F1E00 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551BC6B91AF0619C004F1E00 /* Social.framework */; };
 		801AD9971AF69530005A3FF4 /* NotificationCenterFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801AD9961AF69530005A3FF4 /* NotificationCenterFunc.swift */; };
 		801AD9991AF697DF005A3FF4 /* ColorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801AD9981AF697DF005A3FF4 /* ColorEnum.swift */; };
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/master
 		802060621AF81A3100EE7916 /* MissingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802060611AF81A3100EE7916 /* MissingTableView.swift */; };
 		802060671AF81A4D00EE7916 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 802060631AF81A4D00EE7916 /* check@2x.png */; };
 		802060681AF81A4D00EE7916 /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 802060641AF81A4D00EE7916 /* clock@2x.png */; };
@@ -32,6 +36,11 @@
 		802060701AF81A7600EE7916 /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8020606D1AF81A7600EE7916 /* MGSwipeButton.m */; };
 		802060711AF81A7600EE7916 /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8020606F1AF81A7600EE7916 /* MGSwipeTableCell.m */; };
 		802060731AF81B2300EE7916 /* GlobalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802060721AF81B2300EE7916 /* GlobalFunc.swift */; };
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
 		8025D6771AE2C9EC007B412B /* ma_leftArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8025D6721AE2C9EC007B412B /* ma_leftArrow.png */; };
 		8025D6781AE2C9EC007B412B /* ma_leftArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8025D6731AE2C9EC007B412B /* ma_leftArrow@2x.png */; };
 		8025D6791AE2C9EC007B412B /* ma_rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8025D6741AE2C9EC007B412B /* ma_rightArrow.png */; };
@@ -85,6 +94,10 @@
 		551BC6B91AF0619C004F1E00 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		801AD9961AF69530005A3FF4 /* NotificationCenterFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterFunc.swift; sourceTree = "<group>"; };
 		801AD9981AF697DF005A3FF4 /* ColorEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorEnum.swift; path = ../ColorEnum.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/master
 		802060611AF81A3100EE7916 /* MissingTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingTableView.swift; sourceTree = "<group>"; };
 		802060631AF81A4D00EE7916 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
 		802060641AF81A4D00EE7916 /* clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@2x.png"; sourceTree = "<group>"; };
@@ -95,6 +108,11 @@
 		8020606E1AF81A7600EE7916 /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
 		8020606F1AF81A7600EE7916 /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
 		802060721AF81B2300EE7916 /* GlobalFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunc.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
 		8025D6721AE2C9EC007B412B /* ma_leftArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ma_leftArrow.png; sourceTree = "<group>"; };
 		8025D6731AE2C9EC007B412B /* ma_leftArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ma_leftArrow@2x.png"; sourceTree = "<group>"; };
 		8025D6741AE2C9EC007B412B /* ma_rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ma_rightArrow.png; sourceTree = "<group>"; };
@@ -188,6 +206,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/master
 		8020606B1AF81A7600EE7916 /* MGSwipeTableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +228,14 @@
 				802060641AF81A4D00EE7916 /* clock@2x.png */,
 				802060651AF81A4D00EE7916 /* cross@2x.png */,
 				802060661AF81A4D00EE7916 /* list@2x.png */,
+<<<<<<< HEAD
+=======
+=======
+		8025D6711AE2C9EC007B412B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+>>>>>>> origin/master
+>>>>>>> origin/master
 				8025D6721AE2C9EC007B412B /* ma_leftArrow.png */,
 				8025D6731AE2C9EC007B412B /* ma_leftArrow@2x.png */,
 				B9F37F4E1AE6FEE000B97CA4 /* line.png */,
@@ -267,18 +297,39 @@
 			children = (
 				801AD9981AF697DF005A3FF4 /* ColorEnum.swift */,
 				80FAE5B91AD33FC0002D9E65 /* AppDelegate.swift */,
+<<<<<<< HEAD
 				802060721AF81B2300EE7916 /* GlobalFunc.swift */,
+=======
+<<<<<<< HEAD
+				802060721AF81B2300EE7916 /* GlobalFunc.swift */,
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
 				80FAE5BB1AD33FC0002D9E65 /* ViewController.swift */,
 				8025D6901AE2CA9E007B412B /* DaySmallViewController.swift */,
 				8025D6941AE2D3E1007B412B /* DayDetailViewController.swift */,
 				801AD9961AF69530005A3FF4 /* NotificationCenterFunc.swift */,
+<<<<<<< HEAD
 				802060611AF81A3100EE7916 /* MissingTableView.swift */,
+=======
+<<<<<<< HEAD
+				802060611AF81A3100EE7916 /* MissingTableView.swift */,
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
 				80FAE5BD1AD33FC0002D9E65 /* Main.storyboard */,
 				80FAE5C01AD33FC0002D9E65 /* Images.xcassets */,
 				80FAE5C21AD33FC0002D9E65 /* LaunchScreen.xib */,
 				8082E3281AD3402A00141824 /* JTCalendar_BridgeHeader.h */,
 				8025D6921AE2CBCD007B412B /* Singleton.swift */,
+<<<<<<< HEAD
 				8020606B1AF81A7600EE7916 /* MGSwipeTableCell */,
+=======
+<<<<<<< HEAD
+				8020606B1AF81A7600EE7916 /* MGSwipeTableCell */,
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
 				8025D6801AE2C9F7007B412B /* Views */,
 				8025D67C1AE2C9F1007B412B /* Extensions */,
 				8025D6711AE2C9EC007B412B /* Images */,
@@ -407,15 +458,33 @@
 				80FAE5BF1AD33FC0002D9E65 /* Main.storyboard in Resources */,
 				B9F37F4F1AE6FEE000B97CA4 /* line.png in Resources */,
 				80FAE5C41AD33FC0002D9E65 /* LaunchScreen.xib in Resources */,
+<<<<<<< HEAD
 				8020606A1AF81A4D00EE7916 /* list@2x.png in Resources */,
 				8025D6771AE2C9EC007B412B /* ma_leftArrow.png in Resources */,
 				802060671AF81A4D00EE7916 /* check@2x.png in Resources */,
+=======
+<<<<<<< HEAD
+				8020606A1AF81A4D00EE7916 /* list@2x.png in Resources */,
+				8025D6771AE2C9EC007B412B /* ma_leftArrow.png in Resources */,
+				802060671AF81A4D00EE7916 /* check@2x.png in Resources */,
+=======
+				8025D6771AE2C9EC007B412B /* ma_leftArrow.png in Resources */,
+>>>>>>> origin/master
+>>>>>>> origin/master
 				8025D6781AE2C9EC007B412B /* ma_leftArrow@2x.png in Resources */,
 				8025D67A1AE2C9EC007B412B /* ma_rightArrow@2x.png in Resources */,
 				80FAE5C11AD33FC0002D9E65 /* Images.xcassets in Resources */,
 				8025D67B1AE2C9EC007B412B /* ma_topBackground.png in Resources */,
+<<<<<<< HEAD
 				802060681AF81A4D00EE7916 /* clock@2x.png in Resources */,
 				802060691AF81A4D00EE7916 /* cross@2x.png in Resources */,
+=======
+<<<<<<< HEAD
+				802060681AF81A4D00EE7916 /* clock@2x.png in Resources */,
+				802060691AF81A4D00EE7916 /* cross@2x.png in Resources */,
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,9 +535,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				802060731AF81B2300EE7916 /* GlobalFunc.swift in Sources */,
 				8025D68E1AE2C9F7007B412B /* MAWeekView.m in Sources */,
 				802060711AF81A7600EE7916 /* MGSwipeTableCell.m in Sources */,
+=======
+<<<<<<< HEAD
+				802060731AF81B2300EE7916 /* GlobalFunc.swift in Sources */,
+				8025D68E1AE2C9F7007B412B /* MAWeekView.m in Sources */,
+				802060711AF81A7600EE7916 /* MGSwipeTableCell.m in Sources */,
+=======
+				8025D68E1AE2C9F7007B412B /* MAWeekView.m in Sources */,
+>>>>>>> origin/master
+>>>>>>> origin/master
 				80FAE5BC1AD33FC0002D9E65 /* ViewController.swift in Sources */,
 				8025D68B1AE2C9F7007B412B /* MADayView.m in Sources */,
 				8025D6951AE2D3E1007B412B /* DayDetailViewController.swift in Sources */,
@@ -480,8 +559,16 @@
 				8025D67F1AE2C9F1007B412B /* MAEventKitDataSource.m in Sources */,
 				801AD9991AF697DF005A3FF4 /* ColorEnum.swift in Sources */,
 				8025D68C1AE2C9F7007B412B /* MAEvent.m in Sources */,
+<<<<<<< HEAD
 				802060701AF81A7600EE7916 /* MGSwipeButton.m in Sources */,
 				802060621AF81A3100EE7916 /* MissingTableView.swift in Sources */,
+=======
+<<<<<<< HEAD
+				802060701AF81A7600EE7916 /* MGSwipeButton.m in Sources */,
+				802060621AF81A3100EE7916 /* MissingTableView.swift in Sources */,
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
 				80FAE5BA1AD33FC0002D9E65 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
