@@ -25,7 +25,11 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
     }
     
     override func viewDidAppear(animated: Bool) {
+<<<<<<< HEAD
         reloadEventFromBoth()
+=======
+        showCurrentSchedule()
+>>>>>>> origin/master
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,10 +45,32 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
         return arrEvent
     }
     
+<<<<<<< HEAD
     func reloadEventFromBoth(){
         arrEvent = []
         readFromAppleCalendar()
         showCurrentSchedule()
+=======
+    func dayView(dayView: MADayView!, eventsForDate date: NSDate!) -> NSArray {
+        newDate = date
+        var arr:NSArray = [self.createEvent()]
+        println(arr.count)
+        return arr
+    }
+    
+    func createEvent()->MAEvent{
+        //var r = arc4random()%24
+        var event = MAEvent()
+        event.textColor = UIColor.whiteColor()
+        event.backgroundColor = UIColor.purpleColor()
+        event.allDay = false
+        event.title = "Here"
+        event.start = NSDate()
+        event.end = NSDate().dateByAddingTimeInterval(60*60*1)
+        println(event.start.description)
+        println(event.end.description)
+        return event
+>>>>>>> origin/master
     }
     
     func createEvent(startT:NSDate, endTime:NSDate, color: UIColor, title: String)->MAEvent{
@@ -122,6 +148,7 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
         return UIColor()
     }
 
+<<<<<<< HEAD
     //---------------------------------------------------------------------------------------------------
     //Read from Apple Calendar
     //---------------------------------------------------------------------------------------------------
@@ -162,4 +189,7 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
         return event
     }
 
+=======
+    
+>>>>>>> origin/master
 }

@@ -12,5 +12,9 @@
 #import "MAEvent.h"
 #import "MAEventKitDataSource.h"
 #import "NHCalendarActivity.h"
+<<<<<<< HEAD
 #import "MGSwipeTableCell.h"
 #import "MGSwipeButton.h"
+=======
+//#import "JTCalendar.h"
+>>>>>>> origin/master

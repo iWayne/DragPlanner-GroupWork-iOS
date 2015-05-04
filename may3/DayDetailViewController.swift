@@ -16,10 +16,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     var _eventKitDataSource:MAEventKitDataSource = MAEventKitDataSource()
     var newDate:NSDate? = NSDate()
     var arrEvent:[MAEvent] = []
-    let bColor = UIColor(red:229/255, green:155/255, blue: 155/255, alpha: 0.7)
-    let rColor = UIColor(red:242/255, green:193/255, blue: 24/255, alpha: 0.7)
-    let gColor = UIColor(red:142/255, green:201/255, blue: 188/255, alpha: 0.7)
-    
     
     var oldCoordinate: CGPoint = CGPoint(x: 50, y: 500)
     var oldHeight: CGFloat = 100
@@ -32,6 +28,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     var modifying = false
     var objId: String?
     var idMayDelete: String?
+    var store:EKEventStore = EKEventStore()
     
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var redButton: UIButton!
@@ -56,6 +53,8 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     @IBOutlet var pinchGesture: UIPinchGestureRecognizer!
     @IBOutlet weak var shareButton: UIButton!
     
+    //View Definition
+    //---------------------------------------------------------------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         deleteButton.hidden = true
@@ -82,9 +81,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         (self.view as MADayView).gridView.addGestureRecognizer(swipeRightGesture)
         (self.view as MADayView).gridView.addGestureRecognizer(swipeLeftGesture)
         
-        
-//        var tapScrollView: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: "donedone")
-//        (self.view as MADayView).scrollView.addGestureRecognizer(tapScrollView)
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -95,9 +92,8 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             dayView.autoScrollToFirstEvent = false
             //self.dayView(dayView, eventsForDate: newDate! as NSDate)
             var tim: NSTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("changeDay"), userInfo: nil, repeats: true)
-            showCurrentSchedule()
+            reloadEventFromBoth()
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,14 +101,83 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         // Dispose of any resources that can be recreated.
     }
     
-    //Swipe Right & Left
+    //---------------------------------------------------------------------------------------------------
+    //MADayView Edit
+    //---------------------------------------------------------------------------------------------------
+    func dayView(dayView: MADayView!, eventsForDate date: NSDate!) -> [AnyObject]!
+    {
+        return arrEvent
+    }
+    
+    func dayView(dayView: MADayView!, eventTapped event: MAEvent!) {
+        
+        //        removeEvent(event)
+        //        dayView.reloadData()
+        removeEvent(event)
+        moveTextView.hidden = false
+        var formatter = NSDateFormatter();
+        formatter.dateFormat = "HH:mm";
+        var startT = formatter.stringFromDate(event.start)
+        var endT = formatter.stringFromDate(event.end)
+        var startHourAndMinite = split(startT){$0 == ":"}
+        var endHourAndMinite = split(endT){$0 == ":"}
+        var startSec = startHourAndMinite[0].toInt()! * 3600 + startHourAndMinite[1].toInt()! * 60
+        var endSec = endHourAndMinite[0].toInt()! * 3600 + endHourAndMinite[1].toInt()! * 60
+        var dayViewOffsetY = (self.view as MADayView).scrollView.contentOffset.y
+        var topYY = Double(startSec)/3600 * 46.25 + 55.0 - Double(dayViewOffsetY)
+        var endYY = Double(endSec)/3600 * 46.25 + 55.0 - Double(dayViewOffsetY)
+        var height: CGFloat = CGFloat(endYY) - CGFloat(topYY)
+        moveTextView.frame = CGRectMake(50, CGFloat(topYY), self.view.bounds.size.width - 20, height)
+        deleteButton.hidden = false
+        tempEvent = event
+        addButton.enabled = false
+        modifying = true
+        
+        var query = PFQuery(className:"event")
+        query.whereKey("startTime", equalTo:self.tempEvent?.start.dateByAddingTimeInterval(60*60*(-4)))
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    for object in objects {
+                        self.idMayDelete = object.objectId
+                        println("may delete: \(self.idMayDelete)")
+                    }
+                }
+            } else {
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    func changeDay() {
+        if(moveTextView.frame.origin.x > 150) {
+            swipeLeft()
+        } else if(moveTextView.frame.origin.x < -110) {
+            swipeRight()
+        }
+    }
+    
+    func refreshView(){
+        (self.view as MADayView).reloadData()
+    }
+    
+    func reloadEventFromBoth(){
+        arrEvent = []
+        readFromAppleCalendar()
+        showCurrentSchedule()
+    }
+    
+    //---------------------------------------------------------------------------------------------------
+    //Overwirte Swipe Right & Left
     //---------------------------------------------------------------------------------------------------
     func swipeRight() {
         var dayView:MADayView = self.view as MADayView
         newDate = dayView.previousDayFromDate(newDate)
         dayView.day = newDate
         println("Use Swipe Right")
-        showCurrentSchedule()
+        reloadEventFromBoth()
         
     }
     
@@ -121,9 +186,10 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         newDate = dayView.nextDayFromDate(newDate)
         dayView.day = newDate
         println("Use Swipe Left")
-        showCurrentSchedule()
+        reloadEventFromBoth()
     }
-
+    
+    //---------------------------------------------------------------------------------------------------
     //Share Function
     //---------------------------------------------------------------------------------------------------
     func createCalendarEvent()->NHCalendarEvent{
@@ -145,45 +211,13 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         var items = [msg,url,event]
         var activity:UIActivityViewController = UIActivityViewController(activityItems: items, applicationActivities: activities)
         self.presentViewController(activity, animated: true, completion: nil)
-        
     }
+
+    //---------------------------------------------------------------------------------------------------
+    //Sync with Parse
     //---------------------------------------------------------------------------------------------------
     
-    func setMoveTextView() {
-        
-        moveTextView.hidden = true
-        timeLabel.hidden = true
-        timeLabel2.hidden = true
-        moveTextView.selectable = false
-        moveTextView.text = ""
-        moveTextView.layer.borderWidth = 1
-        moveTextView.layer.borderColor = UIColor.redColor().CGColor
-        moveTextView.layer.cornerRadius = 5
-        moveTextView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.3)
-        moveTextView.delegate = self
-
-        moveTextView.frame = CGRectMake(timeLabel.bounds.width, 100, self.view.bounds.size.width - 20, self.view.bounds.size.height)
-        self.view.bringSubviewToFront(moveTextView)
-        self.view.bringSubviewToFront(timeLabel)
-        self.view.bringSubviewToFront(timeLabel2)
-    }
-    
-    func setAddView() {
-        self.view.bringSubviewToFront(addView)
-        addView.hidden = true
-        addView.layer.borderWidth = 2
-        addView.layer.borderColor = UIColor.brownColor().CGColor
-        addView.layer.cornerRadius = 5
-        addView.frame = CGRectMake(10, 300, 100, 200)
-        
-        redButton.backgroundColor = bColor
-        greenButton.backgroundColor = rColor
-        blueButton.backgroundColor = gColor
-    }
-    
     func showCurrentSchedule() {
-        
-        arrEvent.removeAll(keepCapacity: true)
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         var current = dateFormatter.stringFromDate(newDate!)
@@ -217,9 +251,112 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-
+        refreshView()
+    }
+    
+    
+    //---------------------------------------------------------------------------------------------------
+    //Read from Apple Calendar
+    //---------------------------------------------------------------------------------------------------
+    
+    func readFromAppleCalendar(){
+        var oneDayAgo:NSDate = getMidnight()
+        var oneDayAfter: NSDate = oneDayAgo.dateByAddingTimeInterval(3600*24)
+        store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
+            if(granted){
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    var predicate:NSPredicate = self.store.predicateForEventsWithStartDate(oneDayAgo, endDate: oneDayAfter, calendars: nil)
+                    if(self.store.eventsMatchingPredicate(predicate) != nil) {
+                        var events:NSArray = self.store.eventsMatchingPredicate(predicate)
+                        for event in events {
+                            //if(self.checkEventID((event as EKEvent).eventIdentifier)){
+                                self.arrEvent.append(self.assignEvent(event as EKEvent))
+                            //}
+                        }
+                        (self.view as MADayView).reloadData()
+                    }
+                })
+            }else{
+                println("no way")
+            }
+        })
+    }
+    
+    func assignEvent(eventInput:EKEvent)->MAEvent{
+        var event = MAEvent()
+        event.title = eventInput.title
+        event.start = eventInput.startDate
+        event.end = eventInput.endDate
+        event.allDay = eventInput.allDay
+        //if(eventInput.hasAlarms){}
+        event.appleEventID = eventInput.eventIdentifier
+        event.backgroundColor = gColor
+        return event
     }
 
+    //---------------------------------------------------------------------------------------------------
+    //MoveTextView Definition
+    //---------------------------------------------------------------------------------------------------
+    
+    func setMoveTextView() {
+        
+        moveTextView.hidden = true
+        timeLabel.hidden = true
+        timeLabel2.hidden = true
+        moveTextView.selectable = false
+        moveTextView.text = ""
+        moveTextView.layer.borderWidth = 1
+        moveTextView.layer.borderColor = UIColor.redColor().CGColor
+        moveTextView.layer.cornerRadius = 5
+        moveTextView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.3)
+        moveTextView.delegate = self
+        
+        moveTextView.frame = CGRectMake(timeLabel.bounds.width, 100, self.view.bounds.size.width - 20, self.view.bounds.size.height)
+        self.view.bringSubviewToFront(moveTextView)
+        self.view.bringSubviewToFront(timeLabel)
+        self.view.bringSubviewToFront(timeLabel2)
+    }
+    
+    func setAddView() {
+        self.view.bringSubviewToFront(addView)
+        addView.hidden = true
+        addView.layer.borderWidth = 2
+        addView.layer.borderColor = UIColor.brownColor().CGColor
+        addView.layer.cornerRadius = 5
+        addView.frame = CGRectMake(10, 300, 100, 200)
+        
+        redButton.backgroundColor = bColor
+        greenButton.backgroundColor = rColor
+        blueButton.backgroundColor = gColor
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n"{
+            moveTextView.textAlignment = NSTextAlignment.Center
+            moveTextView.resignFirstResponder()
+            moveTextView.selectable = false
+            moveTextView.editable = false
+            println("return pressed")
+            if oldHeight == 100 {
+                oldHeight = moveTextView.contentSize.height
+            }
+            moveTextView.frame = CGRectMake(oldCoordinate.x, oldCoordinate.y, oldWidth, oldHeight)
+            return false
+        }
+        return true
+    }
+
+    
+    //---------------------------------------------------------------------------------------------------
+    //All Buttons
+    //---------------------------------------------------------------------------------------------------
+    
+    @IBAction func addEvent(sender: UIButton) {
+        addView.hidden = showAddView
+        showAddView = !showAddView
+        
+    }
     
     @IBAction func doneButtonAction(sender: AnyObject) {
         if !moveTextView.hidden {
@@ -303,6 +440,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         }
 
     }
+    
     @IBAction func redButtonAction(sender: AnyObject) {
         moveTextView.backgroundColor = redButton.backgroundColor
         moveTextView.layer.borderColor = UIColor.redColor().CGColor
@@ -353,6 +491,10 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             }
         }
     }
+    
+    //---------------------------------------------------------------------------------------------------
+    //All Gesture
+    //---------------------------------------------------------------------------------------------------
     
     @IBAction func handlePinchGesture(sender: AnyObject) {
         if !pinched {
@@ -425,69 +567,17 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         timeLabel.hidden = false
         timeLabel2.hidden = false
     }
-    @IBAction func addEvent(sender: UIButton) {
-//        var dayView2:MADayView = self.view as MADayView
-//        var setDate:NSDate = newDate!.dateByAddingTimeInterval(60*60*2)
-//        println("Detail Date: ")
-//        println(setDate.description)
-//        arrEvent.append(self.createEvent(setDate))
-//        dayView(dayView2, eventsForDate: setDate)
-//        dayView2.reloadData()
-//        arrEvent = []
-//        moveTextView.hidden = false
-//        moveTextView.editable = true
-//        moveTextView.becomeFirstResponder()
-//        println("dsfdfdsf")
-        addView.hidden = showAddView
-        showAddView = !showAddView
-
-    }
     
-    func donedone(){
-        
-    }
     
-    func changeDay() {
-        if(moveTextView.frame.origin.x > 150) {
-            var dayView: MADayView = self.view as MADayView
-            newDate = dayView.nextDayFromDate(newDate)
-            dayView.day = newDate
-        } else if(moveTextView.frame.origin.x < -110) {
-            var dayView: MADayView = self.view as MADayView
-            newDate = dayView.previousDayFromDate(newDate)
-            dayView.day = newDate
-        }
-    }
-    
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        
-        if text == "\n"{
-            moveTextView.textAlignment = NSTextAlignment.Center
-            moveTextView.resignFirstResponder()
-            moveTextView.selectable = false
-            moveTextView.editable = false
-            println("return pressed")
-            if oldHeight == 100 {
-                oldHeight = moveTextView.contentSize.height
-            }
-            moveTextView.frame = CGRectMake(oldCoordinate.x, oldCoordinate.y, oldWidth, oldHeight)
-            return false
-        }
-        return true
-    }
-
-
+    //---------------------------------------------------------------------------------------------------
+    //Event Array Modification
+    //---------------------------------------------------------------------------------------------------
     
     func changeCGFloatToTime(yPosition:CGFloat)->NSDate {
         var dayViewOffsetY = (self.view as MADayView).scrollView.contentOffset.y
         var offset = (yPosition - 55.0 + dayViewOffsetY )*3600/46.25
         var theTime = newDate?.dateByAddingTimeInterval(Double(offset))
         return theTime!
-    }
-    
-    func dayView(dayView: MADayView!, eventsForDate date: NSDate!) -> [AnyObject]!
-    {
-        return arrEvent
     }
     
     func addEventByDrop(topY1:CGFloat,bottomY1:CGFloat){
@@ -500,57 +590,11 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         println(startTime!.description)
         println(endTime!.description)
         arrEvent.append(self.createEvent(startTime!, endTime: endTime!, color: moveTextView.backgroundColor!))
-        var dayView:MADayView = self.view as MADayView
-        dayView.reloadData()
+        refreshView()
     }
     
     func addEventByTime(sTime: NSDate, eTime: NSDate, color: String) {
-//        arrEvent.removeAll(keepCapacity: true)
         arrEvent.append(self.createEvent(sTime, endTime: eTime, color: UIColor.blackColor()))
-        var dayView:MADayView = self.view as MADayView
-        dayView.reloadData()
-    }
-
-    func dayView(dayView: MADayView!, eventTapped event: MAEvent!) {
-
-//        removeEvent(event)
-//        dayView.reloadData()
-        removeEvent(event)
-        moveTextView.hidden = false
-        var formatter = NSDateFormatter();
-        formatter.dateFormat = "HH:mm";
-        var startT = formatter.stringFromDate(event.start)
-        var endT = formatter.stringFromDate(event.end)
-        var startHourAndMinite = split(startT){$0 == ":"}
-        var endHourAndMinite = split(endT){$0 == ":"}
-        var startSec = startHourAndMinite[0].toInt()! * 3600 + startHourAndMinite[1].toInt()! * 60
-        var endSec = endHourAndMinite[0].toInt()! * 3600 + endHourAndMinite[1].toInt()! * 60
-        var dayViewOffsetY = (self.view as MADayView).scrollView.contentOffset.y
-        var topYY = Double(startSec)/3600 * 46.25 + 55.0 - Double(dayViewOffsetY)
-        var endYY = Double(endSec)/3600 * 46.25 + 55.0 - Double(dayViewOffsetY)
-        var height: CGFloat = CGFloat(endYY) - CGFloat(topYY)
-        moveTextView.frame = CGRectMake(50, CGFloat(topYY), self.view.bounds.size.width - 20, height)
-        deleteButton.hidden = false
-        tempEvent = event
-        addButton.enabled = false
-        modifying = true
-        
-        var query = PFQuery(className:"event")
-        query.whereKey("startTime", equalTo:self.tempEvent?.start.dateByAddingTimeInterval(60*60*(-4)))
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        self.idMayDelete = object.objectId
-                        println("may delete: \(self.idMayDelete)")
-                    }
-                }
-            } else {
-                println("Error: \(error!) \(error!.userInfo!)")
-            }
-        }
     }
     
     func removeEvent(event: MAEvent){
@@ -565,7 +609,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         }
         if index != -1 {
             arrEvent.removeAtIndex(index)
-            (self.view as MADayView).reloadData()
+            refreshView()
         }
     }
     
@@ -578,11 +622,10 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 index = count
                 println("found u")
                 e.backgroundColor = UIColor.whiteColor()
-                (self.view as MADayView).reloadData()
+                refreshView()
                 break
             }
         }
-
     }
     
     func createEvent(startT:NSDate, endTime:NSDate, color: UIColor)->MAEvent{
@@ -599,4 +642,12 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         return event
     }
     
+    //---------------------------------------------------------------------------------------------------
+    //Others
+    //---------------------------------------------------------------------------------------------------
+    func getMidnight()->NSDate{
+        var calendar:NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        var comp:NSDateComponents = calendar.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: NSDate())
+        return calendar.dateFromComponents(comp)!
+    }
 }

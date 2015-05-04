@@ -293,9 +293,15 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                     if(self.store.eventsMatchingPredicate(predicate) != nil) {
                         var events:NSArray = self.store.eventsMatchingPredicate(predicate)
                         for event in events {
+<<<<<<< HEAD
                             if(!(event as EKEvent).allDay){
                                 self.arrEvent.append(self.assignEvent(event as EKEvent))
                             }
+=======
+                            //if(self.checkEventID((event as EKEvent).eventIdentifier)){
+                                self.arrEvent.append(self.assignEvent(event as EKEvent))
+                            //}
+>>>>>>> origin/master
                         }
                         (self.view as MADayView).reloadData()
                     }
@@ -652,7 +658,15 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     //---------------------------------------------------------------------------------------------------
     //Others
     //---------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
     
+=======
+    func getMidnight()->NSDate{
+        var calendar:NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        var comp:NSDateComponents = calendar.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: NSDate())
+        return calendar.dateFromComponents(comp)!
+    }
+>>>>>>> origin/master
 //    func alert() {
 //        
 //        var alertController = UIAlertController(title: "Title", message: "Message", preferredStyle: .Alert)

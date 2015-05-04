@@ -24,7 +24,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientKey: "1G5DWri9FrSljKPLKy0hJUxPaMpnc6Fhav14Gvdo")
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
+        //Notification Center
+        //----------------------------------------------------------------------
+        var laterAction: UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        laterAction.identifier = "LATER_ACTION"
+        laterAction.title = "Later"
+        
+        laterAction.activationMode = UIUserNotificationActivationMode.Background
+        laterAction.destructive = false
+        laterAction.authenticationRequired = false
+        
+        var finishAction: UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        finishAction.identifier = "DO_ACTION"
+        finishAction.title = "Do Now"
+        
+        finishAction.activationMode = UIUserNotificationActivationMode.Foreground
+        finishAction.destructive = false
+        finishAction.authenticationRequired = false
+        
+        //category
+        var firstCategory: UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
+        firstCategory.identifier = "FIRST_CATEGORY"
+        
+        let minimalActions: NSArray = [laterAction, finishAction]
+        
+        firstCategory.setActions(minimalActions, forContext: UIUserNotificationActionContext.Minimal)
+        
+        let categories: NSSet = NSSet(object: firstCategory)
+        
+        let types: UIUserNotificationType = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
+        let mySettings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: categories)
+        UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
+        //----------------------------------------------------------------------
+        
+        
         return true
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        /*
+        if(identifier == "SECOND_ACTION"){
+            println("first action")
+        }
+        completionHandler()
+        */
+    }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        println(notification.userInfo!["key"]!)
+        //
+        //
+        //Add a activity alert
+        //
+        //
     }
 
     func applicationWillResignActive(application: UIApplication) {
