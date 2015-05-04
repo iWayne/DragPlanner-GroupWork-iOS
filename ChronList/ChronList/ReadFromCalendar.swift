@@ -15,6 +15,8 @@ let gColor = UIColor(red:142/255, green:201/255, blue: 188/255, alpha: 0.7)
 func showActoin(){
     println("show Action")
 }
+
+
 /*
 func readFromAppleCalendar(oneDay:NSDate)->[MAEvent] {
     var store:EKEventStore = EKEventStore()
