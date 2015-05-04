@@ -16,15 +16,7 @@
 		<string>https://github.com/ishawn/CS9033-Spr2015-HW-WeiShan.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-<<<<<<< HEAD
 	<string>may4/CalendarSw.xcworkspace</string>
-=======
-<<<<<<< HEAD
-	<string>may4/CalendarSw.xcworkspace</string>
-=======
-	<string>may3/CalendarSw.xcworkspace</string>
->>>>>>> origin/master
->>>>>>> origin/master
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>572A629B9F7E810211D3AD11304033310E44A3C4</key>
