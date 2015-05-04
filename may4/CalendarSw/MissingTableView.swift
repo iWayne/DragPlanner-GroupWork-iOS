@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Parse
 
 class MissingTableView: UITableViewController,UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate, UIActionSheetDelegate {
     var eventsMissed:[MAEvent] = []
+    var index: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +45,13 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
     func swipeTableCell(cell: MGSwipeTableCell!, tappedButtonAtIndex index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
         switch(index){
         case 0:
-            checkButtonAction(cell)
+            crossButtonAction(cell)
             break;
         case 1:
             listButtonAction(cell)
             break;
         case 2:
-            crossButtonAction(cell)
+            checkButtonAction(cell)
             break;
         default:
             break;
@@ -67,16 +69,73 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
     
     func readMissingEvent(){
         //Download from Parse
+        var now = NSDate()
+        var query = PFQuery(className: "event")
+        query.whereKey("startTime", lessThan: now)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    for object in objects {
+                        if self.identifyColor(object["eventColor"] as String) == bColor {
+                            println(object.objectId)
+                            var stime = (object["startTime"] as NSDate).dateByAddingTimeInterval(4*60*60)
+                            var etime = (object["endTime"] as NSDate).dateByAddingTimeInterval(4*60*60)
+                            var title = object["eventContent"] as String
+                            var event = MAEvent()
+                            event.title = title
+                            event.start = stime
+                            event.end = etime
+                            event.eventID = object.objectId
+                            self.eventsMissed.append(event)
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+
     }
     
     func checkButtonAction(cell:MGSwipeTableCell){
         //Change the background of the Event event from Parse
+        index = self.tableView.indexPathForCell(cell)?.row
         println("change BK")
+        var event = eventsMissed[index!]
+        var query = PFQuery(className: "event")
+        query.getObjectInBackgroundWithId(event.eventID) {
+            (newObj: PFObject?, error: NSError?) -> Void in
+            if error != nil && newObj != nil {
+                println(error)
+            } else if let newObj = newObj {
+                newObj["eventColor"] = finishColor.description
+                newObj.saveInBackground()
+            }
+        }
+        eventsMissed.removeAtIndex(index!)
+        self.tableView.reloadData()
     }
     
     func crossButtonAction(cell:MGSwipeTableCell){
         //Delete event from Parse
         println("Delete Event")
+        index = self.tableView.indexPathForCell(cell)?.row
+        var event = eventsMissed[index!]
+        var query = PFQuery(className: "event")
+        query.getObjectInBackgroundWithId(event.eventID) {
+            (newObj: PFObject?, error: NSError?) -> Void in
+            if error != nil && newObj != nil {
+                println(error)
+            } else if let newObj = newObj {
+                newObj.deleteInBackground()
+            }
+        }
+        eventsMissed.removeAtIndex(index!)
+        self.tableView.reloadData()
     }
     
     func listButtonAction(cell:MGSwipeTableCell){
@@ -84,7 +143,25 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
         println("Go to Timeline")
     }
     
-    
+    func identifyColor(colorCode: String) -> UIColor {
+        
+        if colorCode == "UIDeviceRGBColorSpace 0.898039 0.607843 0.607843 0.7" {
+            return bColor
+        }
+        else if colorCode == "UIDeviceRGBColorSpace 0.94902 0.756863 0.0941176 0.7" {
+            return rColor
+        }
+        else if colorCode == "UIDeviceRGBColorSpace 0.556863 0.788235 0.737255 0.7" {
+            return gColor
+        }
+        else if colorCode == "UIDeviceRGBColorSpace 0 1 0 1" {
+            return finishColor
+        }
+        else {
+            return finishColor
+        }
+    }
+
     //---------------------------------------------------------------------------------------------------
     //Table View Setting
     //---------------------------------------------------------------------------------------------------

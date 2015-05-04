@@ -111,15 +111,18 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
     func identifyColor(colorCode: String) -> UIColor {
         
         if colorCode == "UIDeviceRGBColorSpace 0.898039 0.607843 0.607843 0.7" {
-            return rColor
+            return bColor
         }
         else if colorCode == "UIDeviceRGBColorSpace 0.94902 0.756863 0.0941176 0.7" {
-            return bColor
+            return rColor
         }
         else if colorCode == "UIDeviceRGBColorSpace 0.556863 0.788235 0.737255 0.7" {
             return gColor
         }
-        return UIColor()
+        else if colorCode == "UIDeviceRGBColorSpace 0 1 0 1" {
+            return finishColor
+        }
+        return finishColor
     }
 
     //---------------------------------------------------------------------------------------------------

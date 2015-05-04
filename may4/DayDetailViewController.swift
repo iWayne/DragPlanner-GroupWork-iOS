@@ -113,8 +113,11 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         else if colorCode == "UIDeviceRGBColorSpace 0.556863 0.788235 0.737255 0.7" {
             return gColor
         }
+        else if colorCode == "UIDeviceRGBColorSpace 0 1 0 1" {
+            return finishColor
+        }
         else {
-            return rColor
+            return finishColor
         }
     }
     
@@ -172,6 +175,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 }
             }
         }
+        
     }
     
     func changeDay() {
@@ -394,8 +398,25 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             addView.hidden = true
             showAddView = false
             addButton.enabled = true
-
-            if !modifying {
+            
+            if moveTextView.backgroundColor == gColor {
+                if modifying {
+                    var query = PFQuery(className:"event")
+                    query.getObjectInBackgroundWithId(idMayDelete) {
+                        (object: PFObject?, error: NSError?) -> Void in
+                        if error != nil {
+                            println(error)
+                        } else if let object = object {
+                            println("deleting object \(self.idMayDelete)")
+                            object.deleteInBackground()
+                        }
+                    }
+                }
+                modifying = false
+                
+                // apple func here
+            }
+            else if !modifying  {
                 var username = "mewhuan"
                 var testObject = PFObject(className: "event")
                 testObject["username"] = username
