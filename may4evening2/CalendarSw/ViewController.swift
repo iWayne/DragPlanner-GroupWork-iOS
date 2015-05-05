@@ -36,7 +36,7 @@ class ViewController: UIViewController, JTCalendarDataSource {
         self.calendar.reloadData()
         let swiftColor = UIColor(red: 1, green: 165/255, blue: 0, alpha: 1)
         
-        let todayColor = UIColor(red: 1, green: 165/255, blue: 0, alpha: 1)
+        let todayColor = UIColor(red: 1, green: 165/255, blue: 0, alpha: 0.7)
         
         let selectColor = UIColor(red:35/255, green:159/255, blue: 192/255, alpha: 1)
         
