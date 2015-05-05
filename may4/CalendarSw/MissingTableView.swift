@@ -12,6 +12,7 @@ import Parse
 class MissingTableView: UITableViewController,UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate, UIActionSheetDelegate {
     var eventsMissed:[MAEvent] = []
     var index: Int?
+    var startDate:NSDate = NSDate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +27,17 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
     override func didReceiveMemoryWarning() {
     }
     
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "gotoMain"){
+            segue.destinationViewController as ViewController
+        }else if(segue.identifier == "seeDetail"){
+            (segue.destinationViewController as DayDetailViewController).newDate = startDate
+        }
+    }
+    
+    
     func donedone(){
-        println("Press Back")
+        self.performSegueWithIdentifier("gotoMain", sender: self)
     }
 
     /*
@@ -122,7 +131,7 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
     
     func crossButtonAction(cell:MGSwipeTableCell){
         //Delete event from Parse
-        println("Delete Event")
+        //println("Delete Event")
         index = self.tableView.indexPathForCell(cell)?.row
         var event = eventsMissed[index!]
         var query = PFQuery(className: "event")
@@ -140,7 +149,9 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
     
     func listButtonAction(cell:MGSwipeTableCell){
         //Go to Timeline View
-        println("Go to Timeline")
+        index = self.tableView.indexPathForCell(cell)?.row
+        startDate = eventsMissed[index!].start
+        self.performSegueWithIdentifier("seeDetail", sender: self)
     }
     
     func identifyColor(colorCode: String) -> UIColor {
@@ -179,6 +190,12 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
         readMissingEvent()
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        index = indexPath.row
+        startDate = eventsMissed[indexPath.row].start
+        self.performSegueWithIdentifier("seeDetail", sender: self)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

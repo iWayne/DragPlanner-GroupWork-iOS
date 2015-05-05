@@ -241,7 +241,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     }
 
     //---------------------------------------------------------------------------------------------------
-    //Sync with Parse
+    //Read from Parse
     //---------------------------------------------------------------------------------------------------
     
     func showCurrentSchedule() {
@@ -288,7 +288,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     //---------------------------------------------------------------------------------------------------
     
     func readFromAppleCalendar(){
-        var oneDayAgo:NSDate = getMidnight()
+        var oneDayAgo:NSDate = getMidnight(newDate!)
         var oneDayAfter: NSDate = oneDayAgo.dateByAddingTimeInterval(3600*24)
         store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
             if(granted){

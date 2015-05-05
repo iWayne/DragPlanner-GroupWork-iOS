@@ -130,7 +130,7 @@ class DaySmallViewController: UIViewController,MADayViewDelegate,MADayViewDataSo
     //---------------------------------------------------------------------------------------------------
     
     func readFromAppleCalendar(){
-        var oneDayAgo:NSDate = getMidnight()
+        var oneDayAgo:NSDate = getMidnight(newDate)
         var oneDayAfter: NSDate = oneDayAgo.dateByAddingTimeInterval(3600*24)
         var store:EKEventStore = EKEventStore()
         store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in

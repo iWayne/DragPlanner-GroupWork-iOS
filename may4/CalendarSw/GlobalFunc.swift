@@ -8,8 +8,8 @@
 
 import Foundation
 
-func getMidnight()->NSDate{
+func getMidnight(newDate:NSDate)->NSDate{
     var calendar:NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
-    var comp:NSDateComponents = calendar.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: NSDate())
+    var comp:NSDateComponents = calendar.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: newDate)
     return calendar.dateFromComponents(comp)!
 }

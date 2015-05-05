@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="nn5-FD-QlQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -69,7 +69,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="custom" identifier="backToCalendar" id="1Do-cl-6sQ"/>
+                                    <segue destination="BYZ-38-t0r" kind="modal" identifier="backToCalendar" modalTransitionStyle="crossDissolve" id="1Do-cl-6sQ"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evd-GX-JJZ">
@@ -216,28 +216,10 @@
                                 <rect key="frame" x="25" y="28" width="350" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qmj-J4-CHo">
-                                <rect key="frame" x="325" y="394" width="50" height="30"/>
-                                <state key="normal" title="Week">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="changeToWeek:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p4H-sT-oEL"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Yf-jL-YQd" customClass="JTCalendarContentView">
                                 <rect key="frame" x="25" y="86" width="350" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvV-xg-7d5">
-                                <rect key="frame" x="25" y="394" width="50" height="30"/>
-                                <state key="normal" title="Today">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="changeToToday:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PAs-aL-CK2"/>
-                                </connections>
-                            </button>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n9Q-TF-tNy">
                                 <rect key="frame" x="0.0" y="337" width="400" height="400"/>
                                 <connections>
@@ -268,6 +250,24 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qmj-J4-CHo">
+                                <rect key="frame" x="260" y="25" width="53" height="30"/>
+                                <state key="normal" title="Missing">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="nn5-FD-QlQ" kind="modal" id="RjG-xQ-plL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvV-xg-7d5">
+                                <rect key="frame" x="12" y="28" width="50" height="30"/>
+                                <state key="normal" title="Today">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeToToday:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PAs-aL-CK2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -305,10 +305,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="X92-Fd-8XP"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="modal" identifier="gotoMain" modalTransitionStyle="crossDissolve" id="Vj8-zU-Ite"/>
+                        <segue destination="kC1-hZ-HbF" kind="modal" identifier="seeDetail" modalTransitionStyle="crossDissolve" id="K6P-dx-Ypp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BBq-xV-9sL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="560" y="-410"/>
+            <point key="canvasLocation" x="-546" y="-394"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="moX-wj-x7b">
@@ -324,7 +328,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xU9-qs-LUF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20" y="-410"/>
+            <point key="canvasLocation" x="216" y="-522"/>
         </scene>
         <!--Day Small View Controller-->
         <scene sceneID="qvJ-2x-JBG">
@@ -359,4 +363,8 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="Vj8-zU-Ite"/>
+        <segue reference="K6P-dx-Ypp"/>
+    </inferredMetricsTieBreakers>
 </document>
