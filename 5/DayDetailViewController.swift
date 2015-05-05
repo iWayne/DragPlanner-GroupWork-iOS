@@ -30,6 +30,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     var idMayDelete: String?
     var store:EKEventStore = EKEventStore()
     var tempEventForApple: MAEvent?
+    var changingGreen = false
     
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var redButton: UIButton!
@@ -147,6 +148,10 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         addButton.hidden = true
         modifying = true
         
+        if moveTextView.backgroundColor == gColor {
+            changingGreen = true
+        }
+        
         println("tempEvent's ID: \(tempEvent?.eventID)")
         if tempEvent?.eventID != nil {
             var query = PFQuery(className: "event")
@@ -167,6 +172,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 }
             }
         }
+        
         
     }
     
@@ -404,13 +410,14 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             
             if moveTextView.backgroundColor == gColor {
                 if modifying {
+                    println("DDDSDSDSFSF")
                     var query = PFQuery(className:"event")
                     query.getObjectInBackgroundWithId(idMayDelete) {
                         (object: PFObject?, error: NSError?) -> Void in
                         if error != nil {
                             println(error)
                         } else if let object = object {
-                            println("deleting object \(self.idMayDelete)")
+                            println("to green deleting object \(self.idMayDelete)")
                             object.deleteInBackground()
                         }
                     }
@@ -420,7 +427,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 theEvent = resetAppleEvent()
                 saveToAppleCalendar(theEvent)
             }
-            else if (!modifying||idMayDelete == nil)  {
+            else if (!modifying || changingGreen)  {
                 var username = "mewhuan"
                 var testObject = PFObject(className: "event")
                 testObject["username"] = username
@@ -504,7 +511,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             addView.hidden = true
         }
         modifying  = false
-        
+        changingGreen = false
       
         
     }
