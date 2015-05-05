@@ -210,23 +210,28 @@ static const unsigned int TOP_BACKGROUND_HEIGHT          = 35;
 }
 
 - (UIButton *)leftArrow {
+    /*
 	if (!_leftArrow) {
 		_leftArrow = [UIButton buttonWithType:UIButtonTypeCustom];
 		_leftArrow.tag = ARROW_LEFT;
 		[_leftArrow setImage:[UIImage imageNamed:LEFT_ARROW_IMAGE] forState:0];
 		[_leftArrow addTarget:self action:@selector(changeDay:) forControlEvents:UIControlEventTouchUpInside];
 	}
+     */
 	return _leftArrow;
+     
 }
 
 - (UIButton *)rightArrow {
+    /*
 	if (!_rightArrow) {
 		_rightArrow = [UIButton buttonWithType:UIButtonTypeCustom];
 		_rightArrow.tag = ARROW_RIGHT;
 		[_rightArrow setImage:[UIImage imageNamed:RIGHT_ARROW_IMAGE] forState:0];
 		[_rightArrow addTarget:self action:@selector(changeDay:) forControlEvents:UIControlEventTouchUpInside];
-	}
+	}*/
 	return _rightArrow;
+     
 }
 
 - (UILabel *)dateLabel {
