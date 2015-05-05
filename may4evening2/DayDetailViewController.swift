@@ -180,6 +180,8 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     
     func reloadEventFromBoth(){
         arrEvent = []
+        //modifying = false
+        tempEventForApple = nil
         readFromAppleCalendar()
         showCurrentSchedule()
     }
@@ -269,6 +271,11 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         }
         refreshView()
     }
+    
+    //---------------------------------------------------------------------------------------------------
+    //Sync With Parse
+    //---------------------------------------------------------------------------------------------------
+    
     
     
     //---------------------------------------------------------------------------------------------------
@@ -400,18 +407,15 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                             object.deleteInBackground()
                         }
                     }
-                    if(tempEventForApple != nil){
-                        removeFromAppleCalendar(tempEventForApple!)
-                    }
                 }
-                modifying = false
+                
                 
                 // apple func here
-                theEvent = self.addEventByDrop(self.moveTextView.frame.origin.y, bottomY1: self.moveTextView.frame.origin.y + self.moveTextView.bounds.height, eventid: "", title: self.moveTextView.text)
+                theEvent = resetAppleEvent()
                 saveToAppleCalendar(theEvent)
-                
+                modifying = false
             }
-            else if !modifying  {
+            else if (!modifying)  {
                 var username = "mewhuan"
                 var testObject = PFObject(className: "event")
                 testObject["username"] = username
@@ -432,18 +436,16 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             }
             else {
                 println("id modifying: \(idMayDelete)")
+                //println(self.moveTextView.frame.origin.y)
+                
                 var query = PFQuery(className: "event")
                 query.getObjectInBackgroundWithId(idMayDelete) {
                     (newObj: PFObject?, error: NSError?) -> Void in
                     if error != nil && newObj != nil {
                         println(error)
                     } else if let newObj = newObj {
-//                    theEvent = self.addEventByDrop(self.topY, bottomY1: self.bottomY, eventid: newObj.objectId)
-                
                         newObj["eventContent"] = self.moveTextView.text
                         newObj["eventColor"] = self.moveTextView.backgroundColor?.description
-//                    newObj["startTime"] = self.changeCGFloatToTime(self.topY).dateByAddingTimeInterval(4*60*60*(-1))
-//                    newObj["endTime"] = self.changeCGFloatToTime(self.bottomY).dateByAddingTimeInterval(4*60*60*(-1))
                         newObj["startTime"] = self.changeCGFloatToTime(self.moveTextView.frame.origin.y).dateByAddingTimeInterval(4*60*60*(-1))
                         newObj["endTime"] = self.changeCGFloatToTime(self.moveTextView.frame.origin.y + self.moveTextView.bounds.height).dateByAddingTimeInterval(4*60*60*(-1))
                         theEvent = self.addEventByDrop(self.moveTextView.frame.origin.y, bottomY1: self.moveTextView.frame.origin.y + self.moveTextView.bounds.height, eventid: newObj.objectId, title: self.moveTextView.text)
@@ -452,12 +454,18 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 }
                 println("modification completed")
                 modifying  = false
+                //refreshView()
+                
+                if(tempEventForApple != nil){
+                    removeFromAppleCalendar(tempEventForApple!)
+                }
             }
         }
         else {
             addView.hidden = true
         }
         resetMoveTextView()
+        //
     }
     
     @IBAction func redButtonAction(sender: AnyObject) {
@@ -673,8 +681,16 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         event.start = startT
         event.end = endTime
         event.eventID = eventid
-        println(startT.description)
-        println(endTime.description)
+        //println(startT.description)
+        //println(endTime.description)
+        return event
+    }
+    
+    func resetAppleEvent()->MAEvent{
+        var event = self.addEventByDrop(self.moveTextView.frame.origin.y, bottomY1: self.moveTextView.frame.origin.y + self.moveTextView.bounds.height, eventid: "", title: self.moveTextView.text)
+        if(modifying && tempEventForApple != nil){
+            event.appleEventID = tempEventForApple!.appleEventID
+        }
         return event
     }
     
@@ -691,7 +707,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                         self.store.removeEvent(ekEventRemoved, span: EKSpanThisEvent, error: nil)
                     }
                     self.store.saveEvent(self.convertMAEvent2EKEvent(maEvent), span: EKSpanThisEvent, error: nil)
-                    //self.reloadEventFromBoth()
+                    self.reloadEventFromBoth()
                 })
                 
             }else{
@@ -724,7 +740,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     }
 
     func resetMoveTextView() {
-        
         moveTextView.frame = CGRectMake(50, 56, self.view.bounds.size.width - 20, self.view.bounds.size.height - 200)
     }
     
