@@ -29,6 +29,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     var objId: String?
     var idMayDelete: String?
     var store:EKEventStore = EKEventStore()
+    var tempEventForApple: MAEvent?
     
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var redButton: UIButton!
@@ -92,8 +93,9 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             dayView.autoScrollToFirstEvent = false
             //self.dayView(dayView, eventsForDate: newDate! as NSDate)
             var tim: NSTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("changeDay"), userInfo: nil, repeats: true)
+            moveTextView.textAlignment = NSTextAlignment.Center
             reloadEventFromBoth()
-        
+            
         }
     }
 
@@ -102,21 +104,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         // Dispose of any resources that can be recreated.
     }
     
-    func identifyColor(colorCode: String) -> UIColor {
-        
-        if colorCode == "UIDeviceRGBColorSpace 0.898039 0.607843 0.607843 0.7" {
-            return bColor
-        }
-        else if colorCode == "UIDeviceRGBColorSpace 0.94902 0.756863 0.0941176 0.7" {
-            return rColor
-        }
-        else if colorCode == "UIDeviceRGBColorSpace 0.556863 0.788235 0.737255 0.7" {
-            return gColor
-        }
-        else {
-            return rColor
-        }
-    }
+
     
     //---------------------------------------------------------------------------------------------------
     //MADayView Edit
@@ -130,10 +118,12 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         
         //        removeEvent(event)
         //        dayView.reloadData()
+        
         removeEvent(event)
         addView.hidden = false
         moveTextView.hidden = false
         moveTextView.text = event.title
+        moveTextView.textAlignment = NSTextAlignment.Center
         var formatter = NSDateFormatter();
         formatter.dateFormat = "HH:mm";
         var startT = formatter.stringFromDate(event.start)
@@ -149,7 +139,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.frame = CGRectMake(50, CGFloat(topYY), self.view.bounds.size.width - 20, height)
         deleteButton.hidden = false
         tempEvent = event
-        addButton.enabled = false
+        addButton.hidden = true
         modifying = true
         
         println("tempEvent's ID: \(tempEvent?.eventID)")
@@ -163,7 +153,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                     if let objects = objects as? [PFObject] {
                         for object in objects {
                             self.idMayDelete = object.objectId
-                            self.moveTextView.backgroundColor = self.identifyColor(object["eventColor"] as String)
+                            self.moveTextView.backgroundColor = identifyColor(object["eventColor"] as String)
                             println("may delete: \(self.idMayDelete)")
                         }
                     }
@@ -172,6 +162,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 }
             }
         }
+        
     }
     
     func changeDay() {
@@ -237,7 +228,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     }
 
     //---------------------------------------------------------------------------------------------------
-    //Sync with Parse
+    //Read from Parse
     //---------------------------------------------------------------------------------------------------
     
     func showCurrentSchedule() {
@@ -267,7 +258,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                         var etime = (object["endTime"] as NSDate).dateByAddingTimeInterval(4*60*60)
                         var color = object["eventColor"] as String
                         var title = object["eventContent"] as String
-                        self.addEventByTime(stime, eTime: etime, color: self.identifyColor(color), eventid: object.objectId, title: title)
+                        self.addEventByTime(stime, eTime: etime, color: identifyColor(color), eventid: object.objectId, title: title)
                     }
                 }
             } else {
@@ -284,7 +275,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     //---------------------------------------------------------------------------------------------------
     
     func readFromAppleCalendar(){
-        var oneDayAgo:NSDate = getMidnight()
+        var oneDayAgo:NSDate = getMidnight(newDate!)
         var oneDayAfter: NSDate = oneDayAgo.dateByAddingTimeInterval(3600*24)
         store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
             if(granted){
@@ -377,6 +368,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     //---------------------------------------------------------------------------------------------------
     
     @IBAction func addEvent(sender: UIButton) {
+        moveTextView.textAlignment = NSTextAlignment.Center
         addView.hidden = showAddView
         showAddView = !showAddView
         moveTextView.text = ""
@@ -393,9 +385,32 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             deleteButton.hidden = true
             addView.hidden = true
             showAddView = false
-            addButton.enabled = true
-
-            if !modifying {
+            addButton.hidden = false
+            
+            if moveTextView.backgroundColor == gColor {
+                if modifying {
+                    var query = PFQuery(className:"event")
+                    query.getObjectInBackgroundWithId(idMayDelete) {
+                        (object: PFObject?, error: NSError?) -> Void in
+                        if error != nil {
+                            println(error)
+                        } else if let object = object {
+                            println("deleting object \(self.idMayDelete)")
+                            object.deleteInBackground()
+                        }
+                    }
+                    if(tempEventForApple != nil){
+                        removeFromAppleCalendar(tempEventForApple!)
+                    }
+                }
+                modifying = false
+                
+                // apple func here
+                theEvent = self.addEventByDrop(self.moveTextView.frame.origin.y, bottomY1: self.moveTextView.frame.origin.y + self.moveTextView.bounds.height, eventid: "", title: self.moveTextView.text)
+                saveToAppleCalendar(theEvent)
+                
+            }
+            else if !modifying  {
                 var username = "mewhuan"
                 var testObject = PFObject(className: "event")
                 testObject["username"] = username
@@ -450,16 +465,16 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.editable = true
         moveTextView.becomeFirstResponder()
         deleteButton.hidden = false
-        addButton.enabled = false
+        addButton.hidden = true
     }
     @IBAction func greenButtonAction(sender: AnyObject) {
         moveTextView.backgroundColor = greenButton.backgroundColor
-        moveTextView.layer.borderColor = UIColor.greenColor().CGColor
+        moveTextView.layer.borderColor = UIColor.yellowColor().CGColor
         moveTextView.hidden = false
         moveTextView.editable = true
         moveTextView.becomeFirstResponder()
         deleteButton.hidden = false
-        addButton.enabled = false
+        addButton.hidden = true
     }
     @IBAction func blueButtonAction(sender: AnyObject) {
         moveTextView.backgroundColor = blueButton.backgroundColor
@@ -468,7 +483,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.editable = true
         moveTextView.becomeFirstResponder()
         deleteButton.hidden = false
-        addButton.enabled = false
+        addButton.hidden = true
     }
 
     
@@ -478,9 +493,12 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         if tempEvent != nil {
             removeEvent(tempEvent!)
         }
+        if(tempEventForApple != nil){
+            removeFromAppleCalendar(tempEventForApple!)
+        }
         deleteButton.hidden = true
         moveTextView.editable = false
-        addButton.enabled = true
+        addButton.hidden = false
         
         var query = PFQuery(className:"event")
         query.getObjectInBackgroundWithId(idMayDelete) {
@@ -604,11 +622,19 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     }
     
     func removeEvent(event: MAEvent){
+        if(event.appleEventID != nil){
+            tempEventForApple = event
+        }else{
+            tempEventForApple = nil
+        }
         var count: Int = -1
         var index: Int = -1
         for e in arrEvent {
             count++
-            if e.start == event.start && e.end == event.end {
+            if(tempEventForApple != nil && e.appleEventID != nil && tempEventForApple?.appleEventID == e.appleEventID) {
+                index = count
+                break
+            }else if(event.eventID != nil && e.eventID != nil && event.eventID == e.eventID){
                 index = count
                 break
             }
@@ -648,6 +674,66 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         println(endTime.description)
         return event
     }
+    
+    //---------------------------------------------------------------------------------------------------
+    //Save to Apple Calendar
+    //---------------------------------------------------------------------------------------------------
+    func saveToAppleCalendar(maEvent:MAEvent){
+        store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
+            if(granted){
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if(maEvent.appleEventID != nil){
+                        var ekEventRemoved:EKEvent = self.store.eventWithIdentifier(maEvent.appleEventID)
+                        self.store.removeEvent(ekEventRemoved, span: EKSpanThisEvent, error: nil)
+                    }
+                    self.store.saveEvent(self.convertMAEvent2EKEvent(maEvent), span: EKSpanThisEvent, error: nil)
+                    //self.reloadEventFromBoth()
+                })
+                
+            }else{
+                println("no way")
+            }
+        })
+        
+    }
+    
+    //---------------------------------------------------------------------------------------------------
+    //Remove Event from Apple Calendar
+    //---------------------------------------------------------------------------------------------------
+    func removeFromAppleCalendar(maEvent:MAEvent){
+        store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
+            if(granted){
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if(maEvent.appleEventID != nil){
+                        println("remove")
+                        var ekEventRemoved:EKEvent = self.store.eventWithIdentifier(maEvent.appleEventID)
+                        println(ekEventRemoved.eventIdentifier)
+                        self.store.removeEvent(ekEventRemoved, span: EKSpanThisEvent, error: nil)
+                    }
+                    self.reloadEventFromBoth()
+                })
+            }else{
+                println("no way")
+            }
+        })
+        
+    }
+
+    
+    
+    
+    func convertMAEvent2EKEvent(maEvent:MAEvent)->EKEvent{
+        var ekEvent:EKEvent = EKEvent(eventStore: store)
+        ekEvent.startDate = maEvent.start
+        ekEvent.endDate = maEvent.end
+        ekEvent.title = maEvent.title
+        ekEvent.allDay = false
+        ekEvent.calendar = store.defaultCalendarForNewEvents
+        return ekEvent
+    }
+    
+    
     
     //---------------------------------------------------------------------------------------------------
     //Others

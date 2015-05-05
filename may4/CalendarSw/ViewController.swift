@@ -25,10 +25,7 @@ class ViewController: UIViewController, JTCalendarDataSource {
         self.newDate=NSDate()
         self.performSegueWithIdentifier("dayDetail", sender: self)
     }
-    @IBAction func changeToWeek(sender: UIButton) {
-        self.calendar.calendarAppearance.isWeekMode = !self.calendar.calendarAppearance.isWeekMode
-        self.calendar.reloadAppearance()
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.calendar = JTCalendar()
@@ -40,7 +37,7 @@ class ViewController: UIViewController, JTCalendarDataSource {
         
         let todayColor = UIColor(red: 1, green: 165/255, blue: 0, alpha: 1)
         
-        let selectColor = UIColor(red:35/255, green:159/255, blue: 192/255, alpha: 100)
+        let selectColor = UIColor(red:35/255, green:159/255, blue: 192/255, alpha: 1)
         
         // self.calendar.calendarAppearance.calendar.firstWeekday() = 2; // Monday
         
