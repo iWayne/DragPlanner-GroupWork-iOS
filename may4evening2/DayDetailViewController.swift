@@ -345,7 +345,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         self.view.bringSubviewToFront(addView)
         addView.hidden = true
         addView.layer.borderWidth = 2
-        addView.layer.borderColor = UIColor.brownColor().CGColor
+        addView.layer.borderColor = UIColor.grayColor().CGColor
         addView.layer.cornerRadius = 5
         addView.frame = CGRectMake(10, 300, 100, 200)
         
