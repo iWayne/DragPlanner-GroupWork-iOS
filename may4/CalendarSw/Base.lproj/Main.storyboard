@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+=======
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+>>>>>>> origin/master
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -91,7 +95,11 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+<<<<<<< HEAD
                                     <action selector="shareFunc:" destination="kC1-hZ-HbF" eventType="touchUpInside" id="Nxu-qe-VMz"/>
+=======
+                                    <segue destination="BYZ-38-t0r" kind="modal" identifier="backToCalendar" modalTransitionStyle="crossDissolve" id="1Do-cl-6sQ"/>
+>>>>>>> origin/master
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-RU-VOm">
@@ -267,6 +275,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+<<<<<<< HEAD
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ma_topBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="1H7-1L-znb">
                                 <rect key="frame" x="-69" y="-12" width="168" height="75"/>
                             </imageView>
@@ -276,6 +285,11 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qmj-J4-CHo">
                                 <rect key="frame" x="303" y="38" width="79" height="30"/>
                                 <state key="normal" backgroundImage="missing.png">
+=======
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qmj-J4-CHo">
+                                <rect key="frame" x="260" y="25" width="53" height="30"/>
+                                <state key="normal" title="Missing">
+>>>>>>> origin/master
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -283,8 +297,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvV-xg-7d5">
+<<<<<<< HEAD
                                 <rect key="frame" x="12" y="38" width="79" height="30"/>
                                 <state key="normal" backgroundImage="today.png">
+=======
+                                <rect key="frame" x="12" y="28" width="50" height="30"/>
+                                <state key="normal" title="Today">
+>>>>>>> origin/master
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -393,7 +412,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+<<<<<<< HEAD
         <segue reference="9g6-cz-Pmk"/>
         <segue reference="1Do-cl-6sQ"/>
+=======
+        <segue reference="Vj8-zU-Ite"/>
+        <segue reference="K6P-dx-Ypp"/>
+>>>>>>> origin/master
     </inferredMetricsTieBreakers>
 </document>
