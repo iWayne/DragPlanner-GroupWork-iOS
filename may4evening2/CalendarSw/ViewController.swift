@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ViewController: UIViewController, JTCalendarDataSource {
     var newDate:NSDate = NSDate()
@@ -54,19 +55,10 @@ class ViewController: UIViewController, JTCalendarDataSource {
         self.maDayView.backgroundColor = UIColor.blackColor()         
           //  topBackground.backgroundColor = todayColor
         //self.calendar.calendarAppearance.dayCircleColorTodayOtherMonth = UIColor.blackColor()
-        
-        
-        
-        
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("alertView:"), name: "DO_ACTION", object: nil)
         
         //self.calendar.calendarAppearance.dayCircleColorToday = todayColor
-        
         //self.calendar.calendarAppearance.dayTextColorSelected = UIColor.whiteColor()
-        
-
-        
-        
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -95,7 +87,33 @@ class ViewController: UIViewController, JTCalendarDataSource {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func alertView(notification:NSNotification){
+        var alertController = UIAlertController(title: "Event Time!", message: "", preferredStyle: .Alert)
+        var okAction = UIAlertAction(title: "Do Now", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+                println("OK Pressed")
+                var eventID:String = notification.userInfo!["key"]! as String
+                var query = PFQuery(className: "event")
+                query.getObjectInBackgroundWithId(eventID) {
+                    (newObj: PFObject?, error: NSError?) -> Void in
+                    if error != nil && newObj != nil {
+                        println(error)
+                    } else if let newObj = newObj {
+                        newObj["eventColor"] = finishColor.description
+                        newObj.saveInBackground()
+                    }
+                }
+            self.viewDidLoad() 
+        }
+        var cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {
+            UIAlertAction in
+                println("Cancel Pressed")
+        }
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 
 }
 

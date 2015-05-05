@@ -62,21 +62,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-        /*
-        if(identifier == "SECOND_ACTION"){
-            println("first action")
+        
+        if(identifier == "DO_ACTION"){
+            //Change Background Color   eventID = notification.userinfo["key"] as String
+            println("change BK")
+            var eventID:String = notification.userInfo!["key"]! as String
+            var query = PFQuery(className: "event")
+            query.getObjectInBackgroundWithId(eventID) {
+                (newObj: PFObject?, error: NSError?) -> Void in
+                if error != nil && newObj != nil {
+                    println(error)
+                } else if let newObj = newObj {
+                    newObj["eventColor"] = finishColor.description
+                    newObj.saveInBackground()
+                }
+            }
+
         }
         completionHandler()
-        */
+
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        println(notification.userInfo!["key"]!)
-        //
-        //
-        //Add a activity alert
-        //
-        //
+        var nc:NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        nc.postNotificationName("DO_ACTION", object: self, userInfo: notification.userInfo)
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -100,7 +109,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

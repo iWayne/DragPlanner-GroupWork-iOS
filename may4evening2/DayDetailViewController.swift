@@ -182,6 +182,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         arrEvent = []
         //modifying = false
         tempEventForApple = nil
+        tempEvent = nil
         readFromAppleCalendar()
         showCurrentSchedule()
     }
@@ -383,6 +384,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     }
     
     @IBAction func doneButtonAction(sender: AnyObject) {
+        //Modify Events
         
         if !moveTextView.hidden {
             var theEvent = MAEvent()
@@ -413,7 +415,6 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                 // apple func here
                 theEvent = resetAppleEvent()
                 saveToAppleCalendar(theEvent)
-                modifying = false
             }
             else if (!modifying)  {
                 var username = "mewhuan"
@@ -453,11 +454,23 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                     }
                 }
                 println("modification completed")
-                modifying  = false
                 //refreshView()
                 
                 if(tempEventForApple != nil){
                     removeFromAppleCalendar(tempEventForApple!)
+                }
+            }
+            //Set Notifications
+            //------------------------------------------------
+            if(tempEvent != nil && tempEvent?.eventID != nil){
+                cancelNoti(tempEvent!)
+            }
+            if(theEvent.eventID != nil){
+                if(moveTextView.backgroundColor == rColor){
+                    addNotiWithAction(theEvent)
+                }
+                if(moveTextView.backgroundColor == bColor){
+                    addNotiWithoutAction(theEvent)
                 }
             }
         }
@@ -465,7 +478,10 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             addView.hidden = true
         }
         resetMoveTextView()
-        //
+        modifying  = false
+        
+      
+        
     }
     
     @IBAction func redButtonAction(sender: AnyObject) {

@@ -205,7 +205,9 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
             cell = MGSwipeTableCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellIdentifier)
         }
         cell.textLabel?.text = eventsMissed[indexPath.row].title
-        
+        var formatter = NSDateFormatter();
+        formatter.dateFormat = "MMM dd, yyyy HH:MM"
+        cell.detailTextLabel?.text = formatter.stringFromDate(eventsMissed[indexPath.row].start)
         cell.delegate = self; //optional
         cell.leftButtons = nil
         cell.rightButtons = rightButtonsArray()

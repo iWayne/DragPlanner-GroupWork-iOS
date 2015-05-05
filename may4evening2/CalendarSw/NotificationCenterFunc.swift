@@ -27,7 +27,7 @@ func addNotiWithAction(maEvent:MAEvent){
     UIApplication.sharedApplication().scheduleLocalNotification(notification)
 }
 
-func cancalNoti(maEvent:MAEvent){
+func cancelNoti(maEvent:MAEvent){
     var eventInfo = maEvent.userInfo
     for noti in UIApplication.sharedApplication().scheduledLocalNotifications {
         //println(eventInfo)
