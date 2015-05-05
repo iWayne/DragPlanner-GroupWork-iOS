@@ -118,6 +118,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         
         //        removeEvent(event)
         //        dayView.reloadData()
+        
         removeEvent(event)
         addView.hidden = false
         moveTextView.hidden = false
@@ -398,11 +399,15 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                             object.deleteInBackground()
                         }
                     }
+                    if(tempEventForApple != nil){
+                        removeFromAppleCalendar(tempEventForApple!)
+                    }
                 }
                 modifying = false
                 
                 // apple func here
-                
+                theEvent = self.addEventByDrop(self.moveTextView.frame.origin.y, bottomY1: self.moveTextView.frame.origin.y + self.moveTextView.bounds.height, eventid: "", title: self.moveTextView.text)
+                saveToAppleCalendar(theEvent)
                 
             }
             else if !modifying  {
@@ -487,6 +492,9 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.hidden = true
         if tempEvent != nil {
             removeEvent(tempEvent!)
+        }
+        if(tempEventForApple != nil){
+            removeFromAppleCalendar(tempEventForApple!)
         }
         deleteButton.hidden = true
         moveTextView.editable = false
@@ -623,10 +631,10 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         var index: Int = -1
         for e in arrEvent {
             count++
-            if(tempEventForApple != nil && tempEventForApple?.appleEventID == e.appleEventID) {
+            if(tempEventForApple != nil && e.appleEventID != nil && tempEventForApple?.appleEventID == e.appleEventID) {
                 index = count
                 break
-            }else if(event.eventID != nil && event.eventID == e.eventID){
+            }else if(event.eventID != nil && e.eventID != nil && event.eventID == e.eventID){
                 index = count
                 break
             }
@@ -680,7 +688,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                         self.store.removeEvent(ekEventRemoved, span: EKSpanThisEvent, error: nil)
                     }
                     self.store.saveEvent(self.convertMAEvent2EKEvent(maEvent), span: EKSpanThisEvent, error: nil)
-                    self.reloadEventFromBoth()
+                    //self.reloadEventFromBoth()
                 })
                 
             }else{
