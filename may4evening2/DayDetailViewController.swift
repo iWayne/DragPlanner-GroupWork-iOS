@@ -120,6 +120,9 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         //        dayView.reloadData()
 //        timeLabel.hidden = false
 //        timeLabel2.hidden = false
+        if event.backgroundColor == finishColor {
+            return 
+        }
         removeEvent(event)
         addView.hidden = false
         moveTextView.hidden = false
@@ -718,7 +721,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
     func createEvent(startT:NSDate, endTime:NSDate, color: UIColor, eventid: String, title: String)->MAEvent{
         //var r = arc4random()%24
         var event = MAEvent()
-        event.textColor = UIColor.whiteColor()
+        event.textColor = UIColor.blackColor()
         event.backgroundColor = color
         event.allDay = false
         event.title = title

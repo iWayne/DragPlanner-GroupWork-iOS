@@ -118,7 +118,9 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         
         //        removeEvent(event)
         //        dayView.reloadData()
-        
+        if event.backgroundColor == finishColor {
+            return
+        }
         removeEvent(event)
         addView.hidden = false
         moveTextView.hidden = false

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DayDetailViewController.swift"
-            timestampString = "452547017.768085"
+            timestampString = "452550600.872341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
             landmarkName = "dayView(_:eventTapped:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DayDetailViewController.swift"
-            timestampString = "452547017.768085"
+            timestampString = "452550600.872341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "dayView(_:eventTapped:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DayDetailViewController.swift"
-            timestampString = "452547017.768085"
+            timestampString = "452550600.872341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
             landmarkName = "doneButtonAction(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -79,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "107"
             endingLineNumber = "107"
-            landmarkName = "checkButtonAction(_:)"
+            landmarkName = "readMissingEvent()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DayDetailViewController.swift"
-            timestampString = "452547017.768085"
+            timestampString = "452550600.872341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
+            startingLineNumber = "423"
+            endingLineNumber = "423"
             landmarkName = "doneButtonAction(_:)"
             landmarkType = "5">
          </BreakpointContent>

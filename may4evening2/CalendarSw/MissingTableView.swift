@@ -78,7 +78,7 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
     
     func readMissingEvent(){
         //Download from Parse
-        var now = NSDate()
+        var now = NSDate().dateByAddingTimeInterval(4*3600)
         var query = PFQuery(className: "event")
         query.whereKey("startTime", lessThan: now)
         query.findObjectsInBackgroundWithBlock {
@@ -116,6 +116,7 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
         println("change BK")
         var event = eventsMissed[index!]
         var query = PFQuery(className: "event")
+        event.backgroundColor = finishColor
         query.getObjectInBackgroundWithId(event.eventID) {
             (newObj: PFObject?, error: NSError?) -> Void in
             if error != nil && newObj != nil {

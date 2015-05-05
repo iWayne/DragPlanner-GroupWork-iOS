@@ -25,7 +25,7 @@ func identifyColor(colorCode: String) -> UIColor {
     else if colorCode == "UIDeviceRGBColorSpace 0.556863 0.788235 0.737255 0.7" {
         return gColor
     }
-    else if colorCode == "UIDeviceRGBColorSpace 0 1 0 1" {
+    else if colorCode == "UIDeviceRGBColorSpace 0.862745 1 0.823529 0.7" {
         return finishColor
     }
     else {

@@ -78,7 +78,7 @@ class MissingTableView: UITableViewController,UITableViewDataSource, UITableView
     
     func readMissingEvent(){
         //Download from Parse
-        var now = NSDate()
+        var now = NSDate().dateByAddingTimeInterval(4*3600)
         var query = PFQuery(className: "event")
         query.whereKey("startTime", lessThan: now)
         query.findObjectsInBackgroundWithBlock {
