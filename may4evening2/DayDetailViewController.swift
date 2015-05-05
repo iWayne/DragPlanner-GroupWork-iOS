@@ -118,7 +118,8 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         
         //        removeEvent(event)
         //        dayView.reloadData()
-        
+//        timeLabel.hidden = false
+//        timeLabel2.hidden = false
         removeEvent(event)
         addView.hidden = false
         moveTextView.hidden = false
@@ -335,7 +336,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.backgroundColor = rColor
         moveTextView.delegate = self
         
-        moveTextView.frame = CGRectMake(timeLabel.bounds.width, 100, self.view.bounds.size.width - 50, self.view.bounds.size.height - 200)
+        moveTextView.frame = CGRectMake(50, 60, self.view.bounds.size.width/3*2, self.view.bounds.size.height/3)
         self.view.bringSubviewToFront(moveTextView)
         self.view.bringSubviewToFront(timeLabel)
         self.view.bringSubviewToFront(timeLabel2)
@@ -381,6 +382,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         addView.hidden = showAddView
         showAddView = !showAddView
         moveTextView.text = ""
+        resetMoveTextView()
     }
     
     @IBAction func doneButtonAction(sender: AnyObject) {
@@ -411,12 +413,11 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                     }
                 }
                 
-                
                 // apple func here
                 theEvent = resetAppleEvent()
                 saveToAppleCalendar(theEvent)
             }
-            else if (!modifying)  {
+            else if (!modifying||idMayDelete == nil)  {
                 var username = "mewhuan"
                 var testObject = PFObject(className: "event")
                 testObject["username"] = username
@@ -432,7 +433,18 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                     theEvent = self.addEventByDrop(self.moveTextView.frame.origin.y, bottomY1: self.moveTextView.frame.origin.y + self.moveTextView.bounds.height, eventid: testObject.objectId, title: self.moveTextView.text)
                     theEvent.eventID = testObject.objectId
                     testObject["eventId"] = theEvent.eventID
+                    if(theEvent.eventID != nil){
+                        if(self.moveTextView.backgroundColor == bColor){
+                            addNotiWithAction(theEvent)
+                        }
+                        if(self.moveTextView.backgroundColor == rColor){
+                            addNotiWithoutAction(theEvent)
+                        }
+                    }
                     testObject.saveInBackground()
+                }
+                if(tempEventForApple != nil){
+                    removeFromAppleCalendarWithoutRefresh(tempEventForApple!)
                 }
             }
             else {
@@ -450,6 +462,17 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
                         newObj["startTime"] = self.changeCGFloatToTime(self.moveTextView.frame.origin.y).dateByAddingTimeInterval(4*60*60*(-1))
                         newObj["endTime"] = self.changeCGFloatToTime(self.moveTextView.frame.origin.y + self.moveTextView.bounds.height).dateByAddingTimeInterval(4*60*60*(-1))
                         theEvent = self.addEventByDrop(self.moveTextView.frame.origin.y, bottomY1: self.moveTextView.frame.origin.y + self.moveTextView.bounds.height, eventid: newObj.objectId, title: self.moveTextView.text)
+                        if(self.tempEvent != nil && self.tempEvent?.eventID != nil){
+                            cancelNoti(self.tempEvent!)
+                        }
+                        if(theEvent.eventID != nil){
+                            if(self.moveTextView.backgroundColor == bColor){
+                                addNotiWithAction(theEvent)
+                            }
+                            if(self.moveTextView.backgroundColor == rColor){
+                                addNotiWithoutAction(theEvent)
+                            }
+                        }
                         newObj.saveInBackground()
                     }
                 }
@@ -462,22 +485,21 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
             }
             //Set Notifications
             //------------------------------------------------
-            if(tempEvent != nil && tempEvent?.eventID != nil){
-                cancelNoti(tempEvent!)
-            }
-            if(theEvent.eventID != nil){
-                if(moveTextView.backgroundColor == rColor){
-                    addNotiWithAction(theEvent)
-                }
-                if(moveTextView.backgroundColor == bColor){
-                    addNotiWithoutAction(theEvent)
-                }
-            }
+//            if(tempEvent != nil && tempEvent?.eventID != nil){
+//                cancelNoti(tempEvent!)
+//            }
+//            if(theEvent.eventID != nil){
+//                if(moveTextView.backgroundColor == bColor){
+//                    addNotiWithAction(theEvent)
+//                }
+//                if(moveTextView.backgroundColor == rColor){
+//                    addNotiWithoutAction(theEvent)
+//                }
+//            }
         }
         else {
             addView.hidden = true
         }
-        resetMoveTextView()
         modifying  = false
         
       
@@ -538,6 +560,10 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         }
         addView.hidden = true
         showAddView = false
+        timeLabel.hidden = true
+        timeLabel2.hidden = true
+        modifying = false
+
     }
     
     //---------------------------------------------------------------------------------------------------
@@ -588,8 +614,8 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         timeLabel2.text = formatter.stringFromDate(changeCGFloatToTime(bottomY))
         
         println("x: \(topY) y: \(bottomY)")
-        timeLabel.frame = CGRectMake(moveTextView.center.x + moveTextView.bounds.width/2, moveTextView.center.y - moveTextView.bounds.height/2, timeLabel.bounds.width, timeLabel.bounds.height)
-        timeLabel2.frame = CGRectMake(moveTextView.center.x + moveTextView.bounds.width/2, moveTextView.center.y + moveTextView.bounds.height/2 - timeLabel2.bounds.height, timeLabel2.bounds.width, timeLabel2.bounds.height)
+        timeLabel.frame = CGRectMake(moveTextView.center.x - moveTextView.bounds.width/2, moveTextView.center.y - moveTextView.bounds.height/2, timeLabel.bounds.width, timeLabel.bounds.height)
+        timeLabel2.frame = CGRectMake(moveTextView.center.x - moveTextView.bounds.width/2, moveTextView.center.y + moveTextView.bounds.height/2 - timeLabel2.bounds.height, timeLabel2.bounds.width, timeLabel2.bounds.height)
         timeLabel.hidden = false
         timeLabel2.hidden = false
     }
@@ -599,7 +625,11 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         moveTextView.editable = false
 //        moveTextView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.9)
         let location = sender.locationInView(self.view)
-        moveTextView.center = location
+        if location.y > 55 + moveTextView.bounds.height/2 && location.y < self.view.bounds.height - moveTextView.bounds.height/2 {
+            moveTextView.center = location
+            timeLabel.frame = CGRectMake(moveTextView.center.x - moveTextView.bounds.width/2, location.y - moveTextView.bounds.height/2, timeLabel.bounds.width, timeLabel.bounds.height)
+            timeLabel2.frame = CGRectMake(moveTextView.center.x - moveTextView.bounds.width/2, location.y + moveTextView.bounds.height/2 - timeLabel2.bounds.height, timeLabel2.bounds.width, timeLabel2.bounds.height)
+        }
         topY = moveTextView.frame.origin.y
         bottomY = topY + moveTextView.bounds.height
         
@@ -609,9 +639,7 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         timeLabel.text = formatter.stringFromDate(changeCGFloatToTime(topY))
         timeLabel2.text = formatter.stringFromDate(changeCGFloatToTime(bottomY))
         
-        timeLabel.frame = CGRectMake(moveTextView.center.x + moveTextView.bounds.width/2, location.y - moveTextView.bounds.height/2, timeLabel.bounds.width, timeLabel.bounds.height)
-        timeLabel2.frame = CGRectMake(moveTextView.center.x + moveTextView.bounds.width/2, location.y + moveTextView.bounds.height/2 - timeLabel2.bounds.height, timeLabel2.bounds.width, timeLabel2.bounds.height)
-        println("x: \(topY) y: \(bottomY)")
+//        println("x: \(topY) y: \(bottomY)")
         timeLabel.hidden = false
         timeLabel2.hidden = false
     }
@@ -754,9 +782,28 @@ class DayDetailViewController: UIViewController,MADayViewDelegate,MADayViewDataS
         })
         
     }
-
+    
+    func removeFromAppleCalendarWithoutRefresh(maEvent:MAEvent){
+        store.requestAccessToEntityType(EKEntityTypeEvent, completion: { (granted:Bool, error) -> Void in
+            if(granted){
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if(maEvent.appleEventID != nil){
+                        println("remove")
+                        var ekEventRemoved:EKEvent = self.store.eventWithIdentifier(maEvent.appleEventID)
+                        println(ekEventRemoved.eventIdentifier)
+                        self.store.removeEvent(ekEventRemoved, span: EKSpanThisEvent, error: nil)
+                    }
+                    //self.reloadEventFromBoth()
+                })
+            }else{
+                println("no way")
+            }
+        })
+        
+    }
+    
     func resetMoveTextView() {
-        moveTextView.frame = CGRectMake(50, 56, self.view.bounds.size.width - 20, self.view.bounds.size.height - 200)
+        moveTextView.frame = CGRectMake(50, 56, self.view.bounds.size.width/3*2, self.view.bounds.size.height/3)
     }
     
     

@@ -60,6 +60,12 @@ class ViewController: UIViewController, JTCalendarDataSource {
         //self.calendar.calendarAppearance.dayCircleColorToday = todayColor
         //self.calendar.calendarAppearance.dayTextColorSelected = UIColor.whiteColor()
         // Do any additional setup after loading the view, typically from a nib.
+//        var event:MAEvent = MAEvent()
+//        event.title = "ee"
+//        event.start = NSDate().dateByAddingTimeInterval(10)
+//        event.eventID = "eventID"
+//        addNotiWithAction(event)
+        
     }
     
     override func viewDidLayoutSubviews() {

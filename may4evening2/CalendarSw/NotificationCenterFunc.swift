@@ -10,6 +10,7 @@ import Foundation
 
 //At the beginning of the Event
 func addNotiWithoutAction(maEvent:MAEvent){
+    println("no action")
     var notification:UILocalNotification = UILocalNotification()
     notification.alertBody = "Event: \(maEvent.title)"
     notification.fireDate = maEvent.start
@@ -19,6 +20,7 @@ func addNotiWithoutAction(maEvent:MAEvent){
 
 //At the end of the Event
 func addNotiWithAction(maEvent:MAEvent){
+    println("action")
     var notification:UILocalNotification = UILocalNotification()
     notification.alertBody = "Event: \(maEvent.title)"
     notification.category = "FIRST_CATEGORY"
@@ -28,6 +30,7 @@ func addNotiWithAction(maEvent:MAEvent){
 }
 
 func cancelNoti(maEvent:MAEvent){
+    println("cancel")
     var eventInfo = maEvent.userInfo
     for noti in UIApplication.sharedApplication().scheduledLocalNotifications {
         //println(eventInfo)
