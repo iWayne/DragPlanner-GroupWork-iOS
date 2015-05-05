@@ -9,3 +9,5 @@ http://invis.io/TQ2EC6LSR
 Google+ API:
 https://medium.com/swift-programming/google-in-swift-a0943352dfe9
 
+PPT:
+https://docs.google.com/a/nyu.edu/presentation/d/16113AWamjb8H2eXkuZPnuh873CO_R4Rnl9VqJKYI8qs/edit?usp=sharing
