@@ -90,9 +90,13 @@
                                     <segue destination="BYZ-38-t0r" kind="modal" identifier="backToCalendar" modalTransitionStyle="crossDissolve" id="1Do-cl-6sQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EMa-R1-OjT">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EMa-R1-OjT">
                                 <rect key="frame" x="-9" y="14" width="64" height="31"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="76y-VU-RqZ"/>
+                                    <constraint firstAttribute="height" constant="31" id="PVJ-u9-u5f"/>
+                                </constraints>
                                 <state key="normal" image="add.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -218,11 +222,26 @@
                                 <rect key="frame" x="14" y="75" width="296" height="242"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n9Q-TF-tNy">
+                                <rect key="frame" x="0.0" y="315" width="316" height="253"/>
+                                <connections>
+                                    <segue destination="Pqs-c9-Hil" kind="embed" id="MZG-0g-5eI"/>
+                                </connections>
+                            </containerView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vkV-jC-vCQ" userLabel="TodayLabel">
                                 <rect key="frame" x="-3" y="311" width="400" height="87"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ma_topBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="FBX-Gd-AtW">
+                                        <rect key="frame" x="-9" y="17" width="93" height="32"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="line.png" translatesAutoresizingMaskIntoConstraints="NO" id="gey-RT-mYb">
+                                        <rect key="frame" x="29" y="0.0" width="329" height="22"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ma_topBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="pTx-aL-KUc">
+                                        <rect key="frame" x="250" y="19" width="159" height="30"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="irP-Ds-P0Y">
-                                        <rect key="frame" x="0.0" y="5" width="330" height="100"/>
+                                        <rect key="frame" x="-9" y="5" width="330" height="100"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="Button"/>
@@ -230,15 +249,6 @@
                                             <action selector="tapToday:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uEk-Ub-kgq"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ma_topBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="FBX-Gd-AtW">
-                                        <rect key="frame" x="-2" y="-6" width="53" height="47"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="line.png" translatesAutoresizingMaskIntoConstraints="NO" id="gey-RT-mYb">
-                                        <rect key="frame" x="29" y="0.0" width="329" height="22"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ma_topBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="pTx-aL-KUc">
-                                        <rect key="frame" x="265" y="12" width="159" height="30"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -270,12 +280,6 @@
                                     <segue destination="nn5-FD-QlQ" kind="modal" id="RjG-xQ-plL"/>
                                 </connections>
                             </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n9Q-TF-tNy">
-                                <rect key="frame" x="0.0" y="322" width="332" height="253"/>
-                                <connections>
-                                    <segue destination="Pqs-c9-Hil" kind="embed" id="MZG-0g-5eI"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -361,7 +365,7 @@
                         <viewControllerLayoutGuide type="bottom" id="jSz-4e-OnR"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="HgZ-nD-eny" customClass="MADayView">
-                        <rect key="frame" x="0.0" y="0.0" width="332" height="253"/>
+                        <rect key="frame" x="0.0" y="0.0" width="316" height="253"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
