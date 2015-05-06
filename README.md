@@ -1,10 +1,15 @@
 # CS9033-GroupWork-Drag Planner
-Group Project: Daily Shedule
+
+Group Project: Drag Planner
 
 Group Member: Wei Shan N13745493, Dong Li N14180637, Lien-Jung Chang N13362262
 
 Prototype of the application flow：
 http://invis.io/TQ2EC6LSR
 
-Google+ API:
-https://medium.com/swift-programming/google-in-swift-a0943352dfe9 
+Reference:
+JTCalendar
+MACalendar
+NJCalendarActivity
+MGSwipeTable
+Parse API
