@@ -18,44 +18,82 @@ iOS above 8.4
 
 ____
 
-###Discription
+###FLOW PATH
+ 
+ - Add Event
+ 
+   1. Tap '+' in the top-right corner in Daily View, and choose event color
+   2. Type the title
+   3. Hold and move the event to change the start time. (Move close to edge of the screen to change date)
+   4. Pull the bottom of the event to change the duration
+   5. Press 'Done' button to finish
+ 
+ - Delete Event
+ 
+   1. Press and hold an event until its backgroud colour changes
+   2. Press 'Delete' button in the bottom of the screen
+ 
+ - Modify Event
+   1. Press and hold an event until its backgroud colour changes
+   2. Tap the event, and modify the title
+   3. Hold for a while, and move to change the start time
+   4. Pull the bottom of the event to change the duration
+   5. Press 'Done' button to finish
+
+____
+
+###DISCRIPTION
 
 ####Event Type
 
-__Red__
+For data of events, we use SQL query to fetch from cloud and follow the API to get access to iCalender.
 
-The most important event in the app. It comes with a notification and user need to response to that, so user will never miss this event. It will sync with cloud from Parse.com.
+To overcome problem from the asynchronous thread when fetching (get data but never show on the screen), we force fetching process in the main thread. 
 
-__Yellow__
+We also add gestures for multi function, like pulling down to change the duration, tap events to modify the title, and hold event for moving.
 
-The important event that comes with only alarm. It sync with cloud from Parse.com
 
-__Blue__
+ - Red Event
 
-The events from Apple Calendar. User need to provide authorization in order to read them. It show in our app because we want user don't worry about making any conflicts in schedule. But users can also modify these events. It will automatically sync with iCloud.
+  The most important event in the app. It comes with a notification and user need to response to that, so user will never miss this event. It will sync with cloud from Parse.com.
+
+ - Yellow Event
+
+  The important event that comes with only alarm. It sync with cloud from Parse.com
+
+ - Blue Event
+
+  The events from Apple Calendar. User need to provide authorization in order to read them. It show in our app because we want user don't worry about making any conflicts in schedule. But users can also modify these events. It will automatically sync with iCloud.
 
 
 ####View Type
 
-__Main__
+In this part, we implement many libraries for different purposes. Like JTCalendar for Month View, MaCalendar for Daily View, MGSwipeTable for Missing-Event View.
 
-It combines with two different view. A Month View and a Time Line View.
+Without directly implement, We modify much inside the libraries to guarantee they works together and smoothly. For instance, we modify the MaCalendar's API in order to read the position of the Sliding View, which help us to calculate the start time of the event. We also re-write the Event object, which originally didn't support adding events by dragging.
 
-For Month View, users can easily get the date. We also add the swipe gestures for switching the month.
-
-For Time line view, it shows the today's events for 
+We also create many components in this part. Like the rectangles of events, which are separate from the library. We create them, let them above the MaCalender layer, and enable them to communicate with MaCalender data.
 
 
-__Daily__
+ - Main View
 
-This view privide the most straightforward understand for the schedule. Users here can add, delete, modify events by just dragging them.
+  It combines with two different view. A Month View and a Time Line View.
 
-Share function is also available to different target.
+  For Month View, users can easily get the date. We also add the swipe gestures for switching the month.
+
+  For Time line view, it shows the today's events for 
 
 
-__Missing Events__
+ - Daily View
 
-Here list the red events that users didn't response to their notification. Users can review here and also check, delete, or reschedule the events.
+  This view privide the most straightforward understand for the schedule. Users here can add, delete, modify events by just dragging them.
+
+  Share function is also available to different target.
+
+
+ - Missing Event
+
+  Here list the red events that users didn't response to their notification. Users can review here and also check, delete, or reschedule the events.
 
 ____
 
@@ -70,7 +108,7 @@ ____
 
 ____
 
-####Author
+###AUTHOR
 
  - [Wayne/ Wei Shan](https://github.com/ishawn)
  - [Dong Li](https://github.com/mewhuan)
