@@ -10,6 +10,14 @@ Our philosophy is do most what apps can do, instead of forcing users to choose.
 
 ____
 
+###REQUIREMENT
+
+Swift 1.1/1.2
+
+iOS above 8.4
+
+____
+
 ###Discription
 
 ####Event Type
@@ -83,7 +91,7 @@ ____
 
 ###NEXT STEP
 
- * Debug
+ * Debug and update for Swift 2.0
  * Re-organize the events as the sketch:
 
 ![DRAFT](./Presentation Images/Draft.jpg "Sketch")
