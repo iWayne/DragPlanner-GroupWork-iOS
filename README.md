@@ -44,6 +44,8 @@ ____
 
 ###DISCRIPTION
 
+ [PDF Version](./presentation.pdf)
+
 ####Event Type
 
 For data of events, we use SQL query to fetch from cloud and follow the API to get access to iCalender.
